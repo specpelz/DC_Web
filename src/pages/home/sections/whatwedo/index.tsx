@@ -31,7 +31,7 @@ const services = [
 
 const WhatWeDo = () => {
   return (
-    <div className="pt-[20px] pb-[40px] lg:py-[80px]">
+    <div className="pt-[20px] pb-[40px] lg:py-[40px]">
       <div className="flex flex-col lg:flex-row justify-between items-center gap-[40px] lg:gap-[80px]">
         <div className="w-full lg:w-[50%] flex flex-col gap-[8px]">
           <h2
