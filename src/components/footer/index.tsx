@@ -12,7 +12,11 @@ const Footer = () => {
     <div className="flex flex-col  shadow-sm bg-brandGray ">
       <div className="w-[90%] mx-auto py-[20px] lg:py-[40px] flex flex-col gap-[20px] lg:flex-row justify-between items-start ">
         <Link to="/" className="flex items-center z-[100] ">
-          <img src="/datacablogotwo.svg" alt="logo" className="w-[150px] lg:w-auto " />
+          <img
+            src="/datacablogotwo.svg"
+            alt="logo"
+            className="w-[150px] lg:w-auto "
+          />
         </Link>
 
         <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[64px]">
@@ -76,7 +80,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="border-t border-brandDark   py-[16px] bg-brandGray w-full ">
         <div className="w-[90%] mx-auto flex flex-col gap-[14px] lg:gap-0 lg:flex-row justify-between ">
           <p className="text-[16px] text-black">
@@ -85,16 +89,16 @@ const Footer = () => {
 
           <ul className="flex gap-[8px] items-center">
             <li className="w-[24px] h-[24px] rounded-full p-2 border border-brandDark flex items-center justify-center cursor-pointer">
-              <FiFacebook />
+              <FiFacebook size={24} />
             </li>
             <li className="w-[24px] h-[24px] rounded-full p-2 border border-brandDark flex items-center justify-center cursor-pointer">
-              <FiLinkedin />
+              <FiLinkedin size={24} />
             </li>
             <li className="w-[24px] h-[24px] rounded-full p-2 border border-brandDark flex items-center justify-center cursor-pointer">
-              <RiTwitterXFill />
+              <RiTwitterXFill size={24} />
             </li>
             <li className="w-[24px] h-[24px] rounded-full p-2 border border-brandDark flex items-center justify-center cursor-pointer">
-              <FiYoutube />
+              <FiYoutube size={24} />
             </li>
           </ul>
         </div>
