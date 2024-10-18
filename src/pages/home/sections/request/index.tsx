@@ -31,7 +31,7 @@ const RequestData = () => {
               </label>
               <input
                 type="text"
-                className="w-full px-2 py-4 rounded-[8px]"
+                className="w-full p-4 rounded-[8px]"
                 placeholder="Enter your name"
               />
             </div>
@@ -41,7 +41,7 @@ const RequestData = () => {
               </label>
               <input
                 type="text"
-                className="w-full px-2 py-4 rounded-[8px]"
+                className="w-full p-4 rounded-[8px]"
                 placeholder="Enter your email address"
               />
             </div>
@@ -51,8 +51,8 @@ const RequestData = () => {
               </label>
               <input
                 type="text"
-                className="w-full px-2 py-4 rounded-[8px]"
-                placeholder="Enter your organization name"
+                className="w-full p-4 rounded-[8px] "
+                placeholder="Enter your organization name "
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -64,7 +64,7 @@ const RequestData = () => {
                 id="message"
                 cols={10}
                 rows={8}
-                className="rounded-[8px]"
+                className="rounded-[8px] p-4"
               ></textarea>
             </div>
             <PrimaryBtn className="bg-primaryColor  h-[38px] lg:h-[48px] flex justify-center items-center text-brandWhite mt-4">
