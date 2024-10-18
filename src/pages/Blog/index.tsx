@@ -110,13 +110,13 @@ const Blog = () => {
                 {Array.from({ length: imagesPerPage }).map((_, index) => (
                   <div
                     key={index}
-                    className="relative w-full h-[180px] flex flex-col gap-2"
+                    className="relative w-full h-[214px] flex flex-col gap-2"
                   >
                     {/* Delete icon skeleton */}
                     <div className="absolute top-4 right-4 bg-gray-200 animate-pulse w-[26px] h-[26px] rounded-full"></div>
 
                     {/* Image skeleton */}
-                    <div className="w-full h-[180px] bg-gray-200 animate-pulse rounded-[14px]"></div>
+                    <div className="w-full h-[214px] bg-gray-200 animate-pulse rounded-[14px]"></div>
                   </div>
                 ))}
               </div>

@@ -14,6 +14,8 @@ interface AQIData {
     humidity:string;
     heat:string;
     voltage:string;
+    date:string;
+
   }
 
 interface props {
