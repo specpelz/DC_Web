@@ -18,7 +18,7 @@ const Hero = () => {
               fontFamily: "Merriweather",
               fontWeight: 700,
             }}
-            className="text-[24px] lg:text-[48px] text-center font-[700] lg:leading-[57px] lg:w-[997px]"
+            className="text-[24px] md:text-[32px] lg:text-[48px] text-center font-[700] lg:leading-[57px] lg:w-[997px]"
           >
             Empowering Environmental Advocacy Through Data Simplification for
             Sustainable Action

@@ -13,7 +13,7 @@ const MobileAppExperience = () => {
               fontFamily: "Merriweather",
               fontWeight: 700,
             }}
-            className="text-[24px] lg:text-[32px]  lg:leading-[38px] w-[90%]  lg:mx-0 mx-auto lg:w-[613px] text-brandWhite"
+            className="text-[20px] lg:text-[32px]  lg:leading-[38px] w-[90%]  lg:mx-0 mx-auto lg:w-[613px] text-brandWhite"
           >
             Experience seamless access to reliable data solutions at your
             fingertips.

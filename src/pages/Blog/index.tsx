@@ -1,6 +1,6 @@
 import MainLayout from "@layouts/MainLayout";
 import { Button, Input, Pagination } from "antd";
-import {IoSearch } from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

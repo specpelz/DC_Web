@@ -8,6 +8,8 @@ import MediaAwareness from "./sections/media";
 import MobileAppExperience from "./sections/app";
 import EnvironmentalBlog from "./sections/blog";
 import Multimedia from "./sections/multimedia";
+import Donors from "./sections/donors";
+import RequestData from "./sections/request";
 
 const Home = () => {
   return (
@@ -21,6 +23,8 @@ const Home = () => {
         <MobileAppExperience />
         <EnvironmentalBlog />
         <Multimedia />
+        <RequestData />
+        <Donors />
       </Container>
     </MainLayout>
   );
