@@ -39,7 +39,7 @@ const WhatWeDo = () => {
               fontFamily: "Merriweather",
               fontWeight: 700,
             }}
-            className="text-[24px] lg:text-[32px] lg:w-[379px] lg:leading-[38px]"
+            className="text-[20px] lg:text-[32px] lg:w-[379px] lg:leading-[38px]"
           >
             What We Do
           </h2>

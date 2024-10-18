@@ -1,4 +1,3 @@
-
 import NotFound from "@pages/NotFound";
 import React, { lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -13,17 +12,24 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        
-        <Route path="/" element={
-          <React.Suspense>  <Home /></React.Suspense>
-        
-          } />
+        <Route
+          path="/"
+          element={
+            <React.Suspense>
+              {" "}
+              <Home />
+            </React.Suspense>
+          }
+        />
 
-        <Route path="/multimedia" element={
-          <React.Suspense> 
-          <Multimedia />
-          </React.Suspense> 
-          } />
+        <Route
+          path="/multimedia"
+          element={
+            <React.Suspense>
+              <Multimedia />
+            </React.Suspense>
+          }
+        />
         <Route
           path="/blog"
           element={
@@ -40,11 +46,14 @@ const AppRouter = () => {
             </React.Suspense>
           }
         />
-        <Route path="/air-reading" element={
-          <React.Suspense> 
-          <AirReading />
-          </React.Suspense> 
-          } />
+        <Route
+          path="/air-reading"
+          element={
+            <React.Suspense>
+              <AirReading />
+            </React.Suspense>
+          }
+        />
 
         {/* 404 page */}
         <Route path="*" element={<NotFound />} />

@@ -7,7 +7,7 @@ const MapHighlights = () => {
             fontFamily: "Merriweather",
             fontWeight: 700,
           }}
-          className="text-[24px] lg:text-[32px] lg:w-[379px] lg:leading-[38px] text-center"
+          className="text-[20px] lg:text-[32px] lg:w-[379px] lg:leading-[38px] text-center"
         >
           Map Highlights
         </h2>

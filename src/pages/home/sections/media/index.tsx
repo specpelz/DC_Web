@@ -11,7 +11,7 @@ const MediaAwareness = () => {
               fontFamily: "Merriweather",
               fontWeight: 700,
             }}
-            className="text-[24px] lg:text-[32px] lg:w-[400px] lg:leading-[38px]"
+            className="text-[20px] lg:text-[32px] lg:w-[400px] lg:leading-[38px]"
           >
             Media Awareness and Justice Initiative (MAJI)
           </h2>

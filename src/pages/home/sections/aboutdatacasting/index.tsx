@@ -79,7 +79,7 @@ const AboutDataCasting = () => {
   };
 
   return (
-    <div className="pt-[40px] pb-[20px] lg:py-[80px]">
+    <div id="about" className="pt-[40px] pb-[20px] lg:py-[80px]">
       <div className="flex flex-col-reverse lg:flex-row justify-between items-center gap-[60px] lg:gap-[80px]">
         <div className="w-full lg:w-[50%] flex flex-col gap-[8px]">
           <h2
@@ -87,7 +87,7 @@ const AboutDataCasting = () => {
               fontFamily: "Merriweather",
               fontWeight: 700,
             }}
-            className="text-[24px] lg:text-[32px] lg:w-[379px] lg:leading-[38px]"
+            className="text-[20px] lg:text-[32px] lg:w-[379px] lg:leading-[38px]"
           >
             About the Data Casting Biodiversity Initiative
           </h2>
