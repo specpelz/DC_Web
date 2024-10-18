@@ -4,6 +4,7 @@ import {
   IoIosCloseCircleOutline,
 } from "react-icons/io";
 
+// Define props for the Modal component
 interface ModalProps {
   isOpen: boolean;
   image: string;
