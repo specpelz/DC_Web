@@ -116,29 +116,20 @@ const Nav = () => {
             </li>
           ))}
         </ul>
-        <Link to="#">
+        <Link to="/air-reading">
           <PrimaryBtn className="bg-primaryColor h-[38px] lg:h-[48px] flex justify-center items-center text-brandWhite">
             Check Air Quality
-          </PrimaryBtn>
-        </Link>
-        <Link to="#">
-          <PrimaryBtn className="text-brandWhite bg-brandDark h-[38px] lg:h-[48px] flex justify-center items-center">
-            Check Air Spillage
           </PrimaryBtn>
         </Link>
       </div>
 
       <div className="hidden lg:flex lg:items-center lg:gap-[1.6rem]">
-        <Link to="#">
+        <Link to="/air-reading">
           <PrimaryBtn className="bg-primaryColor h-[38px] lg:h-[48px] flex justify-center items-center text-brandWhite">
             Check Air Quality
           </PrimaryBtn>
         </Link>
-        <Link to="#">
-          <PrimaryBtn className="text-brandWhite bg-brandDark h-[38px] lg:h-[48px] flex justify-center items-center">
-            Check Air Spillage
-          </PrimaryBtn>
-        </Link>
+
       </div>
     </div>
   );
