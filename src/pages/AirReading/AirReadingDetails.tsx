@@ -1,63 +1,89 @@
-
+import Container from "@components/container";
 import MainLayout from "@layouts/MainLayout";
-import { Typography } from "antd";
-
-import { IoCalendarOutline } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
-
+import MapHighlights from "./map";
 
 const AirReadingDetails = () => {
- 
-
-
-
-
   const location = useLocation();
   const { item } = location.state || {};
 
-  const { Title, Paragraph } = Typography;
+  const colorRange = [
+    {
+      color: "/lemon.svg",
+      text: "Good",
+    },
+    {
+      color: "/yello.svg",
+      text: "Moderate",
+    },
+    {
+      color: "/brown.svg",
+      text: "Unhealthy for sensitive groups",
+    },
+    {
+      color: "/red.svg",
+      text: "Unhealthy",
+    },
+    {
+      color: "/purple.svg",
+      text: "Very unhealthy",
+    },
+    {
+      color: "/blood.svg",
+      text: "Harzadous",
+    },
+  ];
 
   return (
     <MainLayout>
-      <div className="flex justify-center mt-[60px]">
-        <div className="w-[90%] md:flex md:gap-x-[20px] xl:gap-x-[40px] mb-[150px] md:mb-[280px]">
-          <div className="w-full md:w-[70%]">
-            <div key={item.id} className="w-full">
-              <div className="w-full h-[400px] rounded-md mb-[16.5px]">
-                <img
-                  src={item.country}
-                  alt="uploaded image"
-                  className="w-full h-[400px] rounded-[14px] object-cover"
-                />
-              </div>
-              <div className="flex items-center gap-x-[5px]">
-                <IoCalendarOutline size={17.5} color="#757575" />
-                <div className="text-[#757575] text-[12px]">
-                  {item.country}
-                </div>
-              </div>
-              <Title
-                style={{
-                  color: "#2C2C2C",
-                }}
-                ellipsis={{ rows: 1, expandable: false }}
-                level={4}
-              >
-                {item.country}
-              </Title>
-              <Paragraph
-                style={{
-                  color: "#757575",
-                }}
-                ellipsis={{ rows: 2, expandable: false }}
-              >
-                {item.country}
-              </Paragraph>
-            </div>
-          </div>
-      
+      <Container>
+        <div className="text-[32px] font-[700] text-[#2C2C2C] mt-[60px]">
+          Air Quality in {item.community}
         </div>
-      </div>
+        <div className="text-[32px] font-[700] text-[#2C2C2C]">
+          {item.lga}&nbsp;LGA,&nbsp; {item.state}
+        </div>
+
+        <div className="rounded-[20px] shadow-md w-full p-[40px] mt-[50px]">
+          <div className="text-[16px] font-[700] text-[#2C2C2C]">
+            Current reading
+          </div>
+          <div className="text-[18px] font-[500] text-[#757575]">
+            Last Updated:{item.date}
+          </div>
+
+          <div className="flex w-full mt-[17px]">
+            <div className="w-[50%] bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] flex">
+              <div className="w-[70%] h-[150px]"></div>
+              <div className="w-[30%]">
+                {colorRange.map((item, index) => (
+                  <div 
+                  key={index.toString()}
+                  className="flex gap-x-[16px] items-center mb-[12.5px] ">
+                    <div className="w-[20%]">
+                      <img
+                       src={item.color} 
+                      alt="lemon color"
+                      width={20}
+                      height={20}
+                       />
+                    </div>
+                    <div className="w-[80%] font-[400] text-[18px] text-[#2C2C2C]">
+                    {item.text}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="w-[50%]"></div>
+          </div>
+
+          <div className="my-[40px]">
+            <div className="font-[700] text-[24px] mb-[-20px]">Map</div>
+            <MapHighlights />
+          </div>
+        </div>
+      </Container>
     </MainLayout>
   );
 };
