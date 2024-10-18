@@ -13,15 +13,12 @@ const navlinks: NavigationTypes[] = [
   {
     id: 2,
     title: "About",
-    link: (e: React.MouseEvent<HTMLElement>) => {
-      e.preventDefault();
-      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-    },
+    link: "/#about", // Full path with hash
   },
   {
     id: 3,
     title: "Multimedia",
-    link: "#",
+    link: "/multimedia",
   },
   {
     id: 4,
@@ -32,20 +29,30 @@ const navlinks: NavigationTypes[] = [
 
 const Nav = () => {
   const location = useLocation();
-
-  // Function to check if the link is active
-  const isActive = (
-    link: string | ((e: React.MouseEvent<HTMLElement>) => void)
-  ) => {
-    if (typeof link === "string") {
-      return location.pathname.startsWith(link);
-    }
-    return false; // Return false for functions as they are not navigational links
-  };
-
   const [open, setOpen] = useState<boolean>(false);
+
   const toggleMenu = () => {
     setOpen((prev) => !prev);
+  };
+
+  // Function to check if the link is active
+  const isActive = (link: string) => {
+    if (link === "/#about") {
+      return location.hash === "#about";
+    }
+    return location.pathname === link;
+  };
+
+  // Handle navigation with hash scrolling
+  const handleLinkClick = (link: string) => {
+    if (link === "/#about") {
+      if (location.pathname === "/") {
+        const element = document.getElementById("about");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }
   };
 
   return (
@@ -76,16 +83,15 @@ const Nav = () => {
             <li
               key={navlink.id}
               className={`md:text-[1.6rem] lg:text-[1.8rem] cursor-pointer font-[500] ${
-                isActive(navlink.link) ? "text-primaryColor" : ""
+                isActive(navlink.link) ? "text-primaryColor" : "text-brandDark"
               }`}
             >
-              {typeof navlink.link === "function" ? (
-                <button onClick={navlink.link} className="focus:outline-none">
-                  {navlink.title}
-                </button>
-              ) : (
-                <Link to={navlink.link}>{navlink.title}</Link>
-              )}
+              <Link
+                to={navlink.link}
+                onClick={() => handleLinkClick(navlink.link)}
+              >
+                {navlink.title}
+              </Link>
             </li>
           ))}
         </ul>
@@ -106,13 +112,12 @@ const Nav = () => {
                 isActive(navlink.link) ? "text-primaryColor" : ""
               }`}
             >
-              {typeof navlink.link === "function" ? (
-                <button onClick={navlink.link} className="focus:outline-none">
-                  {navlink.title}
-                </button>
-              ) : (
-                <Link to={navlink.link}>{navlink.title}</Link>
-              )}
+              <Link
+                to={navlink.link}
+                onClick={() => handleLinkClick(navlink.link)}
+              >
+                {navlink.title}
+              </Link>
             </li>
           ))}
         </ul>
@@ -129,7 +134,6 @@ const Nav = () => {
             Check Air Quality
           </PrimaryBtn>
         </Link>
-
       </div>
     </div>
   );
