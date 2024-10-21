@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import AQ_Card from "@components/AQ_card";
 import MapHighlights from "./map";
 import Container from "@components/container";
+import Donors from "@pages/home/sections/donors";
 
 interface AQIData {
   id: string;
@@ -101,38 +102,38 @@ const AirReading = () => {
 
   // const { country,Paragraph  } = Typography;
 
-  const donors = [
-    {
-      logo: "/pro_co.svg",
-      text1: "Association For Progressive",
-      text2: "Communications",
-    },
-    {
-      logo: "/fren_nig.svg",
-      text1: "Association For Progressive",
-      text2: "Communications",
-    },
-    {
-      logo: "/united_con.svg",
-      text1: "Association For Progressive",
-      text2: "Communications",
-    },
-    {
-      logo: "/green_grant.svg",
-      text1: "Association For Progressive",
-      text2: "Communications",
-    },
-    {
-      logo: "/ocf.svg",
-      text1: "Association For Progressive",
-      text2: "Communications",
-    },
-    {
-      logo: "/ndi.svg",
-      text1: "Association For Progressive",
-      text2: "Communications",
-    },
-  ];
+  // const donors = [
+  //   {
+  //     logo: "/pro_co.svg",
+  //     text1: "Association For Progressive",
+  //     text2: "Communications",
+  //   },
+  //   {
+  //     logo: "/fren_nig.svg",
+  //     text1: "Association For Progressive",
+  //     text2: "Communications",
+  //   },
+  //   {
+  //     logo: "/united_con.svg",
+  //     text1: "Association For Progressive",
+  //     text2: "Communications",
+  //   },
+  //   {
+  //     logo: "/green_grant.svg",
+  //     text1: "Association For Progressive",
+  //     text2: "Communications",
+  //   },
+  //   {
+  //     logo: "/ocf.svg",
+  //     text1: "Association For Progressive",
+  //     text2: "Communications",
+  //   },
+  //   {
+  //     logo: "/ndi.svg",
+  //     text1: "Association For Progressive",
+  //     text2: "Communications",
+  //   },
+  // ];
 
   return (
     <MainLayout>
@@ -208,7 +209,7 @@ const AirReading = () => {
       </div>
 
       <Container>
-        <div className="text-center font-[700] text-[24px] text-[#2C2C2C]">
+        {/* <div className="text-center font-[700] text-[24px] text-[#2C2C2C]">
           Our Donors
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-[40px] mt-[20px] mb-[73px]">
@@ -230,7 +231,8 @@ const AirReading = () => {
             ))
           }
  
-        </div>
+        </div> */}
+         <Donors />
       </Container>
     </MainLayout>
   );
