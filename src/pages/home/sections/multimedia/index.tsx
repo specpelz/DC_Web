@@ -12,11 +12,6 @@ interface ModalProps {
   onClose: () => void;
 }
 
-interface MultimediaDetail {
-  id: string;
-  media: string;
-}
-
 const Modal: React.FC<ModalProps> = ({ isOpen, image, onClose }) => {
   if (!isOpen) return null;
 
@@ -32,8 +27,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, image, onClose }) => {
     </div>
   );
 };
-
-const Multimedia: React.FC<MultimediaDetail> = () => {
+ 
+const Multimedia = () => {
   const nav = useNavigate();
   const { multimediaDetails, loading } = useMultimedia();
   const [isModalOpen, setModalOpen] = useState(false);
