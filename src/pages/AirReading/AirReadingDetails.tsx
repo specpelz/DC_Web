@@ -82,7 +82,7 @@ const AirReadingDetails = () => {
   const aqr_days = [
     {
       value: "63",
-      day: "Tuesday",
+      day: "Monday",
       date: "1",
       month: "November",
     },
@@ -94,31 +94,31 @@ const AirReadingDetails = () => {
     },
     {
       value: "78",
-      day: "Tuesday",
+      day: "Wednesday",
       date: "3",
       month: "November",
     },
     {
       value: "79",
-      day: "Tuesday",
+      day: "Thursday",
       date: "4",
       month: "November",
     },
     {
       value: "94",
-      day: "Tuesday",
+      day: "Friday",
       date: "5",
       month: "November",
     },
     {
       value: "88",
-      day: "Tuesday",
+      day: "Saturday",
       date: "6",
       month: "November",
     },
     {
       value: "61",
-      day: "Tuesday",
+      day: "Sunday",
       date: "7",
       month: "November",
     },
@@ -127,61 +127,133 @@ const AirReadingDetails = () => {
   const pm1 = [
     {
       value: "11",
+      day: "Monday",
+      date: "1",
+      month: "November",
     },
     {
       value: "18",
+      day: "Tuesday",
+      date: "2",
+      month: "November",
     },
     {
       value: "12",
+      day: "Wednesday",
+      date: "3",
+      month: "November",
     },
     {
       value: "14",
+      day: "Thursday",
+      date: "4",
+      month: "November",
     },
     {
       value: "18",
+      day: "Friday",
+      date: "5",
+      month: "November",
     },
     {
       value: "18",
+      day: "Saturday",
+      date: "6",
+      month: "November",
+    },
+    {
+      value: "9",
+      day: "Sunday",
+      date: "7",
+      month: "November",
     },
   ];
   const pm25 = [
     {
       value: "11",
+      day: "Monday",
+      date: "1",
+      month: "November",
     },
     {
       value: "18",
+      day: "Tuesday",
+      date: "2",
+      month: "November",
     },
     {
       value: "18",
+      day: "Wednesday",
+      date: "3",
+      month: "November",
     },
     {
       value: "9",
+      day: "Thursday",
+      date: "4",
+      month: "November",
     },
     {
       value: "18",
+      day: "Friday",
+      date: "5",
+      month: "November",
     },
     {
       value: "18",
+      day: "Saturday",
+      date: "6",
+      month: "November",
+    },
+    {
+      value: "9",
+      day: "Sunday",
+      date: "7",
+      month: "November",
     },
   ];
   const pm10 = [
     {
       value: "10",
+      day: "Monday",
+      date: "1",
+      month: "November",
     },
     {
       value: "18",
+      day: "Tuesday",
+      date: "2",
+      month: "November",
     },
     {
       value: "16",
+      day: "Wednesday",
+      date: "3",
+      month: "November",
     },
     {
       value: "18",
+      day: "Thursday",
+      date: "4",
+      month: "November",
     },
     {
       value: "18",
+      day: "Friday",
+      date: "5",
+      month: "November",
     },
     {
       value: "19",
+      day: "Saturday",
+      date: "6",
+      month: "November",
+    },
+    {
+      value: "29",
+      day: "Sunday",
+      date: "7",
+      month: "November",
     },
   ];
 
@@ -376,19 +448,25 @@ const AirReadingDetails = () => {
           {tab_value === "pm1" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
               {pm1.map((item, index) => (
-                <div
-                  key={index.toString()}
-                  className={` bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
-                    getAQRGrade(item.value) !== "No data"
-                      ? "bg-[#62F42E]"
-                      : "bg-[#C2C2C2]"
-                  }`}
-                >
-                  <div>
-                    <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
-                      {item.value}
+                  <div className="flex flex-col items-center">
+                  <div
+                    key={index.toString()}
+                    className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
+                      getAQRGrade(item.value) !== "No data"
+                        ? "bg-[#62F42E]"
+                        : "bg-[#C2C2C2]"
+                    }`}
+                  >
+                    <div>
+                      <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
+                        {item.value}
+                      </div>
+                
                     </div>
                   </div>
+
+                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">{item.day}</div>
+                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">{item.date}&nbsp;{item.month}</div>
                 </div>
               ))}
             </div>
@@ -396,39 +474,51 @@ const AirReadingDetails = () => {
           {tab_value === "pm2.5" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
               {pm25.map((item, index) => (
-                <div
-                  key={index.toString()}
-                  className={` bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
-                    getAQRGrade(item.value) !== "No data"
-                      ? "bg-[#62F42E]"
-                      : "bg-[#C2C2C2]"
-                  }`}
-                >
-                  <div>
-                    <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
-                      {item.value}
-                    </div>
-                  </div>
-                </div>
+                          <div className="flex flex-col items-center">
+                          <div
+                            key={index.toString()}
+                            className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
+                              getAQRGrade(item.value) !== "No data"
+                                ? "bg-[#62F42E]"
+                                : "bg-[#C2C2C2]"
+                            }`}
+                          >
+                            <div>
+                              <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
+                                {item.value}
+                              </div>
+                          
+                            </div>
+                          </div>
+        
+                          <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">{item.day}</div>
+                          <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">{item.date}&nbsp;{item.month}</div>
+                        </div>
               ))}
             </div>
           )}
           {tab_value === "pm10" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
               {pm10.map((item, index) => (
-                <div
-                  key={index.toString()}
-                  className={` bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
-                    getAQRGrade(item.value) !== "No data"
-                      ? "bg-[#62F42E]"
-                      : "bg-[#C2C2C2]"
-                  }`}
-                >
-                  <div>
-                    <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
-                      {item.value}
+                  <div className="flex flex-col items-center">
+                  <div
+                    key={index.toString()}
+                    className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
+                      getAQRGrade(item.value) !== "No data"
+                        ? "bg-[#62F42E]"
+                        : "bg-[#C2C2C2]"
+                    }`}
+                  >
+                    <div>
+                      <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
+                        {item.value}
+                      </div>
+                
                     </div>
                   </div>
+
+                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">{item.day}</div>
+                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">{item.date}&nbsp;{item.month}</div>
                 </div>
               ))}
             </div>
