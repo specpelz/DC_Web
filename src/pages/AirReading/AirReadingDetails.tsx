@@ -5,6 +5,9 @@ import MapHighlights from "./map";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { Divider } from "antd";
 import { useState } from "react";
+import { GaugeComponent } from "react-gauge-component";
+import Select from "@components/select/Select";
+import { MdClose } from "react-icons/md";
 
 const AirReadingDetails = () => {
   const location = useLocation();
@@ -288,6 +291,25 @@ const AirReadingDetails = () => {
 
   const [tab_value, set_tab_value] = useState<string>("aq");
 
+  const time_line = [
+    {
+      value: "Last 7 days",
+      label: "Last 7 days",
+    },
+    {
+      value: "Last 14 days",
+      label: "Last 14 days",
+    },
+    {
+      value: "Last 1 month",
+      label: "Last 1 month",
+    },
+    {
+      value: "2 months ago",
+      label: "2 months ago",
+    },
+  ];
+
   return (
     <MainLayout>
       <Container>
@@ -308,8 +330,86 @@ const AirReadingDetails = () => {
 
           <div className="w-full xl:flex mt-[17px] gap-x-[20px]">
             <div className="mb-[20px] xl:mb-[unset] md:flex w-full xl:w-[50%] bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] ">
-              <div className="w-full md:w-[70%] h-[150px]"></div>
-              <div className="grid grid-cols-2 gap-[10px] w-full md:w-[30%] md:block">
+              <div className="w-full md:w-[70%] h-fit">
+                <div className="text-[24px] font-[700] text-[#2C2C2C] ">
+                  Air Quality Index
+                </div>
+                <GaugeComponent
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                  }}
+                  value={12.6}
+                  type="semicircle"
+                  labels={{
+                    tickLabels: {
+                      type: "outer", // Try "inner" or "outer" based on your preference
+                      ticks: [
+                        { value: 10 },
+                        { value: 20 },
+                        { value: 30 },
+                        { value: 40 },
+                        { value: 50 },
+                        { value: 60 },
+                        { value: 70 },
+                        { value: 80 },
+                        { value: 90 },
+                        { value: 100 },
+                      ],
+                      defaultTickValueConfig: {
+                        formatTextValue: (value: string) => {
+                          const string_value = Number(value);
+                          const num = string_value * 5;
+
+                          return String(num);
+                        },
+                      },
+                    },
+
+                    valueLabel: {
+                      formatTextValue: (value: string) => {
+                        const string_value = Number(value);
+                        const num = string_value * 5;
+                        const text = "Good";
+                        return String(`${num} - ${text}`);
+                      },
+                      // matchColorWithArc: true,
+                      style: {
+                        fontSize: "35px",
+                        fill: "#000",
+                        textShadow: "unset",
+                        fontWeight: "bolder",
+                      },
+                    },
+                  }}
+                  arc={{
+                    colorArray: [
+                      "#62f42a",
+                      "#e5f434",
+                      "#f49c4b",
+                      "#df352a",
+                      "#b430e3",
+                      "#8b2121",
+                    ],
+                    // colorArray: ["#5BE12C", "#EA4228"],
+                    subArcs: [
+                      { limit: 10 },
+                      { limit: 20 },
+                      { limit: 30 },
+                      { limit: 40 },
+                      { limit: 60 },
+                      { limit: 100 },
+                    ],
+                    padding: 0.02,
+                    width: 0.3,
+                  }}
+                  pointer={{
+                    elastic: true,
+                    animationDelay: 0,
+                  }}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-[10px] w-full md:w-[30%] md:flex md:flex-col md:justify-between">
                 {colorRange.map((item, index) => (
                   <div
                     key={index.toString()}
@@ -392,7 +492,49 @@ const AirReadingDetails = () => {
             <MapHighlights />
           </div>
         </div>
+        <div className="rounded-[20px] shadow-md w-full p-[20px] lg:p-[40px] mt-[50px]">
+          <div className="font-[700] text-[24px]">Map</div>
+          <p className="text-[14px] text-[#757575] mb-[20px]">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborumLorem ipsum
+            dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+            veniam, quis nostrud exercitation.
+          </p>
+          <div className="text-[#1D48E7] text-[14px]">Learn More</div>
+        </div>
+        <div className="rounded-[20px] shadow-md w-full p-[20px] lg:p-[40px] mt-[50px]">
+          <div className="font-[700] text-[24px]">Historical Reading</div>
+          <div className="w-[50%]">
+            <Select
+              name="timeline"
+              label=""
+              placeholder="Select the country"
+              required={false}
+              requiredMessage="Please select the country!"
+              options={time_line} // Ensure countries is an array of { value, label }
+              showSearch={true}
+              defaultValue="Last 7 days"
+              // styleClass="bg-[#E6E6E6]"
+            />
+          </div>
 
+          <div className="xl:grid xl:grid-cols-2 xl:gap-[20px]">
+            <div className="mb-[20px] xl:mb-[unset] md:flex w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[300px]"></div>
+            <div className="mb-[20px] xl:mb-[unset] md:flex w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[300px]"></div>
+            <div className="mb-[20px] xl:mb-[unset] md:flex w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[300px]"></div>
+            <div className="mb-[20px] xl:mb-[unset] md:flex w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[300px]"></div>
+          </div>
+          <div className="mt-[20px]">
+            <div className="mb-[20px] xl:mb-[unset] md:flex w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[300px]"></div>
+      
+          </div>
+        </div>
         <div className="rounded-[20px] shadow-md w-full p-[20px] lg:p-[40px] mt-[50px]">
           <div className="xl:flex justify-between items-center gap-x-[20px]">
             <div className="text-[18px] text-[700] md:text-[24px] font-[700] mb-[20px] xl:mb-[unset]">
@@ -439,8 +581,12 @@ const AirReadingDetails = () => {
                     </div>
                   </div>
 
-                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">{item.day}</div>
-                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">{item.date}&nbsp;{item.month}</div>
+                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">
+                    {item.day}
+                  </div>
+                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">
+                    {item.date}&nbsp;{item.month}
+                  </div>
                 </div>
               ))}
             </div>
@@ -448,7 +594,7 @@ const AirReadingDetails = () => {
           {tab_value === "pm1" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
               {pm1.map((item, index) => (
-                  <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center">
                   <div
                     key={index.toString()}
                     className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
@@ -461,12 +607,15 @@ const AirReadingDetails = () => {
                       <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
                         {item.value}
                       </div>
-                
                     </div>
                   </div>
 
-                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">{item.day}</div>
-                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">{item.date}&nbsp;{item.month}</div>
+                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">
+                    {item.day}
+                  </div>
+                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">
+                    {item.date}&nbsp;{item.month}
+                  </div>
                 </div>
               ))}
             </div>
@@ -474,33 +623,7 @@ const AirReadingDetails = () => {
           {tab_value === "pm2.5" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
               {pm25.map((item, index) => (
-                          <div className="flex flex-col items-center">
-                          <div
-                            key={index.toString()}
-                            className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
-                              getAQRGrade(item.value) !== "No data"
-                                ? "bg-[#62F42E]"
-                                : "bg-[#C2C2C2]"
-                            }`}
-                          >
-                            <div>
-                              <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
-                                {item.value}
-                              </div>
-                          
-                            </div>
-                          </div>
-        
-                          <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">{item.day}</div>
-                          <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">{item.date}&nbsp;{item.month}</div>
-                        </div>
-              ))}
-            </div>
-          )}
-          {tab_value === "pm10" && (
-            <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
-              {pm10.map((item, index) => (
-                  <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center">
                   <div
                     key={index.toString()}
                     className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
@@ -513,16 +636,70 @@ const AirReadingDetails = () => {
                       <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
                         {item.value}
                       </div>
-                
                     </div>
                   </div>
 
-                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">{item.day}</div>
-                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">{item.date}&nbsp;{item.month}</div>
+                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">
+                    {item.day}
+                  </div>
+                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">
+                    {item.date}&nbsp;{item.month}
+                  </div>
                 </div>
               ))}
             </div>
           )}
+          {tab_value === "pm10" && (
+            <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
+              {pm10.map((item, index) => (
+                <div className="flex flex-col items-center">
+                  <div
+                    key={index.toString()}
+                    className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
+                      getAQRGrade(item.value) !== "No data"
+                        ? "bg-[#62F42E]"
+                        : "bg-[#C2C2C2]"
+                    }`}
+                  >
+                    <div>
+                      <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
+                        {item.value}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">
+                    {item.day}
+                  </div>
+                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">
+                    {item.date}&nbsp;{item.month}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="mb-[100px]">
+          <div className="bg-[#ECF0FD] rounded-[20px] p-[35px] my-[40px]">
+<div className="flex justify-end p-[16px]"><MdClose size={24}/> </div>
+<p className="text-[18px] w-[80%]">
+The  Airnote is made in patnership with <span className="text-[#1D48E7]">Safecast</span>, a volunteer-centered organization devoted to open  citizen science for environmental monitoring. <span className="text-[#1D48E7]">Donate here</span>. 
+</p>
+          </div>
+          <div className="flex justify-between text-[28px] font-[500]">
+<div>
+  <div className="text-center">Connected By</div>
+  <div className="text-[#1D48E7] text-center">Notecard</div>
+</div>
+<div>
+<div className="text-center">Developed By</div>
+<div className="text-[#1D48E7] text-center">Blues Inc.</div>
+</div>
+<div>
+<div className="text-center">In Patnership  with</div>
+<div className="text-[#1D48E7] text-center">Safecast</div>
+</div>
+          </div>
         </div>
       </Container>
     </MainLayout>
