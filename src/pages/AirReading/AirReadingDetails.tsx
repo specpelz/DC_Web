@@ -949,7 +949,7 @@ const AirReadingDetails = () => {
               <span className="text-[#1D48E7]">Donate here</span>.
             </p>
           </div>
-          <div className="flex flex-col gap-y-[20px] md:flex-[unset] justify-between text-[18px] md:text-[28px] font-[500]">
+          <div className="flex flex-col gap-y-[20px] md:flex-row justify-between text-[18px] md:text-[28px] font-[500]">
             <div>
               <div className="text-center">Connected By</div>
               <div className="text-[#1D48E7] text-center">Notecard</div>
