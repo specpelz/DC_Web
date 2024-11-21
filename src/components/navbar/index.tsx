@@ -29,9 +29,7 @@ const navlinks: NavigationTypes[] = [
 
 const Nav = () => {
 
-
   const location = useLocation();
-
 
 
   const [open, setOpen] = useState<boolean>(false);
