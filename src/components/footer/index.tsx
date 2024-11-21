@@ -28,7 +28,7 @@ const Footer = () => {
               Quick Links
             </label>
             <ul className="text-brandDark text-[16px] flex flex-col gap-[8px]">
-              <Link to="#about">
+              <Link to="/#about">
                 <li className="cursor-pointer">About</li>
               </Link>
               <Link to="/multimedia">
@@ -36,9 +36,6 @@ const Footer = () => {
               </Link>
               <Link to="/blog">
                 <li className="cursor-pointer">Blog</li>
-              </Link>
-              <Link to="/air-reading">
-                <li className="cursor-pointer">Oil Spillage</li>
               </Link>
               <Link to="/air-reading">
                 <li className="cursor-pointer">Air Monitoring</li>
