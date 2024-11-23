@@ -11,6 +11,7 @@ import Donors from "@pages/home/sections/donors";
 import Select_v2 from "@components/select/Select_v2";
 import { AQIData } from "../../types/airMonitoring";
 import useAqtStore from "@store/airReading";
+import { MdClear } from "react-icons/md";
 
 interface SelectOption {
   value: string;
@@ -21,10 +22,10 @@ interface SelectOption {
 const AQI_datas: AQIData[] = [
   {
     id: `0`,
-    country: `Botzwana`,
-    state: `West Central Botzwana`,
-    lga: `Ghanzi`,
-    city: `Ghanzi`,
+    country: `Nigeria`,
+    state: `West Central Nigeria`,
+    lga: `Edo`,
+    city: `Edo`,
     AQI: `65`,
     pm_1: `11`,
     pm_2: `18`,
@@ -40,10 +41,10 @@ const AQI_datas: AQIData[] = [
 for (let i = 1; i < 30; i++) {
   AQI_datas.push({
     id: `${i}`,
-    country: `Botzwana ${i}`,
-    state: `West Central Botzwana ${i}`,
-    lga: `Ghanzi ${i}`,
-    city: `Ghanzi ${i}`,
+    country: `Nigeria`,
+    state: `West Central Nigeria ${i}`,
+    lga: `Edo ${i}`,
+    city: `Edo ${i}`,
     AQI: `65${+i}`,
     pm_1: `11${+i}`,
     pm_2: `18${+i}`,
@@ -84,7 +85,7 @@ const AirReading = () => {
 
 
 
-  const [countryOptions, setCountryOptions] = useState<SelectOption[]>([]);
+  // const [countryOptions, setCountryOptions] = useState<SelectOption[]>([]);
   const [stateOptions, setStateOptions] = useState<SelectOption[]>([]);
   const [lgaOptions, setLgaOptions] = useState<SelectOption[]>([]);
   const [cityOptions, setCityOptions] = useState<SelectOption[]>([]);
@@ -112,7 +113,7 @@ const AirReading = () => {
       );
     };
 
-    setCountryOptions(uniqueOptions("country"));
+    // setCountryOptions(uniqueOptions("country"));
     setStateOptions(uniqueOptions("state"));
     setLgaOptions(uniqueOptions("lga"));
     setCityOptions(uniqueOptions("city"));
@@ -259,21 +260,30 @@ const AirReading = () => {
 
             {/* <div className="flex justify-between items-center"> */}
             <div className="flex gap-x-[16px] items-center">
-              <Input
+       <div className="relative">
+       <Input
                 placeholder="Search for data... "
                 prefix={<IoSearch size={17.5} />}
-                className="h-[46px] w-[323px] bg-transparent"
+                className="w-[250px] h-[46px] lg:w-[323px] bg-transparent"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
+{
+  searchQuery.length > 0 ?(
+<div className="absolute right-[5px] top-[20%] z-[500] cursor-pointer"
+onClick={()=>{
+  setSearchQuery("")
+}}
 
-              {/* <Button
-                type="primary"
-                onClick={handleUploadClick}
-                className="w-[200px] h-[48px] text-[16px] font-[400] bg-BrandPrimary"
-              >
-                <div className="text-[16px] font-[400]">Search</div>
-              </Button> */}
+>
+                <MdClear color="red" size={30}/>
+              </div>
+  ):""
+}
+              
+       </div>
+
+     
 
               <Button
                 className={`h-[46px] w-[18%  ${
@@ -300,25 +310,26 @@ const AirReading = () => {
             <div className="mt-[16px] relative">
               {showFilter_v2 && (
                 <div
-                  className={`absolute  w-full h-fit z-[999] px-[25px] bg-white ${
+                  className={`shadow-md rounded-md absolute  w-full h-fit z-[999] px-[25px] bg-white ${
                     showFilter === true ? "block" : "hidden"
                   }`}
                 >
-                  <div className="flex gap-x-[20px]  mt-[20px]">
-                    <div className="lg:w-[20%] ">
+                  <div className="lg:flex gap-x-[20px]  mt-[20px]">
+                    <div className="lg:w-[25%] ">
                       <Select_v2
                         name="country"
                         label="Country"
                         placeholder="Select country"
                         required={false}
-                        options={countryOptions}
+                        options={[{ value: "Nigeria", label: "Nigeria" ,key:"Nigeria"}]}
+                        // options={countryOptions}
                         value={filterValues.country || undefined}
                         onChange={(value) =>
                           handleFilterChange(value, "country")
                         }
                       />
                     </div>
-                    <div className="lg:w-[20%] ">
+                    <div className="lg:w-[25%] ">
                       <Select_v2
                         name="state"
                         label="State"
@@ -329,7 +340,7 @@ const AirReading = () => {
                         onChange={(value) => handleFilterChange(value, "state")}
                       />
                     </div>
-                    <div className="lg:w-[20%] ">
+                    <div className="lg:w-[25%] ">
                       <Select_v2
                         name="lga"
                         label="L.G.A"
@@ -340,7 +351,7 @@ const AirReading = () => {
                         onChange={(value) => handleFilterChange(value, "lga")}
                       />
                     </div>
-                    <div className="lg:w-[20%] ">
+                    <div className="lg:w-[25%] ">
                       <Select_v2
                         name="city"
                         label="Community"
@@ -407,16 +418,22 @@ const AirReading = () => {
                 ))}
               </div>
             ) : (
-              <p> NOTHING HERE FOR NOW</p>
+              <p className="text-[14px] font-bold"> Not found</p>
             )}
+{
 
-            <Pagination
+currentItems.length > 0 ? (
+<Pagination
               className="my-6 flex justify-end"
               current={currentPage}
               pageSize={lgasPerPage}
               total={AQI_datas.length}
               onChange={onPageChange}
             />
+):
+""
+}
+            
           </div>
         </div>
       </Container>
