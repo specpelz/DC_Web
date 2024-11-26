@@ -3,16 +3,16 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet"; // Import Leaflet for custom icons
 
 const devices = [
-  { id: 1, name: "Device A", lat: 6.5244, lng: 3.3792 }, // Lagos
-  { id: 2, name: "Device B", lat: 7.3775, lng: 3.947 }, // Abeokuta
-  { id: 3, name: "Device C", lat: 9.0765, lng: 7.3986 }, // Abuja
-  { id: 4, name: "Device D", lat: 6.4654, lng: 7.5464 }, // Enugu
-  { id: 5, name: "Device E", lat: 10.3158, lng: 9.8442 }, // Jos
-  { id: 6, name: "Device F", lat: 11.7459, lng: 11.9661 }, // Maiduguri
-  { id: 7, name: "Device G", lat: 4.8156, lng: 7.0498 }, // Port Harcourt
-  { id: 8, name: "Device H", lat: 8.4905, lng: 4.5481 }, // Ilorin
-  { id: 9, name: "Device I", lat: 12.0022, lng: 8.5919 }, // Kano
-  { id: 10, name: "Device J", lat: 7.8735, lng: 5.0745 }, // Akure
+  { id: 1, name: "Device A", lat: 6.5244, lng: 3.3792, state: "Lagos" }, // Lagos
+  { id: 2, name: "Device B", lat: 7.3775, lng: 3.947, state: "Abeokuta" }, // Abeokuta
+  { id: 3, name: "Device C", lat: 9.0765, lng: 7.3986, state: "Abuja" }, // Abuja
+  { id: 4, name: "Device D", lat: 6.4654, lng: 7.5464, state: "Enugu" }, // Enugu
+  { id: 5, name: "Device E", lat: 10.3158, lng: 9.8442, state: "Jos" }, // Jos
+  { id: 6, name: "Device F", lat: 11.7459, lng: 11.9661, state: "Maiduguri" }, // Maiduguri
+  { id: 7, name: "Device G", lat: 4.8156, lng: 7.0498, state: "Port Harcourt" }, // Port Harcourt
+  { id: 8, name: "Device H", lat: 8.4905, lng: 4.5481, state: "Ilorin" }, // Ilorin
+  { id: 9, name: "Device I", lat: 12.0022, lng: 8.5919, state: "Kano" }, // Kano
+  { id: 10, name: "Device J", lat: 7.8735, lng: 5.0745, state: "Akure" }, // Akure
 ];
 
 const MapHighlights = () => {
@@ -60,9 +60,11 @@ const MapHighlights = () => {
               >
                 <Tooltip>
                   <div>
-                    <strong className="text-xl">{device.name}</strong>
+                    <span className="text-xl font-[600]">{device.name}</span>
                     <br />
-                    <span className="text-xl">
+                    <span className="text-lg">{device.state}</span>
+                    <br />
+                    <span className="text-lg">
                       Lat: {device.lat.toFixed(4)}, Lng: {device.lng.toFixed(4)}
                     </span>
                   </div>
