@@ -69,21 +69,16 @@ const AirReading = () => {
   const aqt_data = useAqtStore((state) => state.AQI_datas);
   const set_aqt_data = useAqtStore((state) => state.set_AQI_datas);
 
-
-
-
   const [filteredItems, setFilteredItems] = useState<AQIData[]>([]);
   const [loadinglgas, setLoadinglgas] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  
+
   // Initial data setup
   useEffect(() => {
     set_aqt_data(AQI_datas);
     setFilteredItems(AQI_datas);
   }, []);
-
-
 
   // const [countryOptions, setCountryOptions] = useState<SelectOption[]>([]);
   const [stateOptions, setStateOptions] = useState<SelectOption[]>([]);
@@ -134,7 +129,7 @@ const AirReading = () => {
       [field]: value,
     }));
   };
- 
+
   const applyFilter = () => {
     const filtered = aqt_data.filter((item) => {
       const countryMatch =
@@ -144,7 +139,6 @@ const AirReading = () => {
       const lgaMatch = !filterValues.lga || item.lga === filterValues.lga;
       const cityMatch = !filterValues.city || item.city === filterValues.city;
 
-      
       return countryMatch && stateMatch && lgaMatch && cityMatch;
     });
 
@@ -152,12 +146,7 @@ const AirReading = () => {
     setCurrentPage(1); // Reset to first page after filtering
     setShowFilter(false);
     setIsFilterActive(true);
-
-  }
-
-
-
-
+  };
 
   const clearFilter = () => {
     setFilterValues({
@@ -178,14 +167,12 @@ const AirReading = () => {
     clearFilter();
   }, []);
 
-
   // useEffect(() => {
   //   const timer = setTimeout(() => setLoadinglgas(false), 2000);
   //   return () => clearTimeout(timer);
   // }, []);
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const timer = setTimeout(() => setLoadinglgas(false), 2000);
@@ -195,7 +182,6 @@ const AirReading = () => {
   const onPageChange = (page: number) => {
     setCurrentPage(page);
   };
-
 
   useEffect(() => {
     let result = aqt_data;
@@ -217,16 +203,12 @@ const AirReading = () => {
     setCurrentPage(1);
   }, [searchQuery, aqt_data]);
 
-
-
-
-
   const lgasPerPage = 9;
 
-  const currentItems= filteredItems.slice(
-      (currentPage - 1) * lgasPerPage,
-      currentPage * lgasPerPage
-  )
+  const currentItems = filteredItems.slice(
+    (currentPage - 1) * lgasPerPage,
+    currentPage * lgasPerPage
+  );
 
   // const currentItems = the_FilteredData.length >0 ? the_FilteredData.slice(
   //   (currentPage - 1) * lgasPerPage,
@@ -236,10 +218,6 @@ const AirReading = () => {
   //     (currentPage - 1) * lgasPerPage,
   //     currentPage * lgasPerPage
   // )
-
-
-
- 
 
   const handleNavigate = (item: AQIData) => {
     navigate(`/air-reading-details/${item.id}`, { state: { item } });
@@ -260,30 +238,27 @@ const AirReading = () => {
 
             {/* <div className="flex justify-between items-center"> */}
             <div className="flex gap-x-[16px] items-center">
-       <div className="relative">
-       <Input
-                placeholder="Search for data... "
-                prefix={<IoSearch size={17.5} />}
-                className="w-[250px] h-[46px] lg:w-[323px] bg-transparent"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-{
-  searchQuery.length > 0 ?(
-<div className="absolute right-[5px] top-[20%] z-[500] cursor-pointer"
-onClick={()=>{
-  setSearchQuery("")
-}}
-
->
-                <MdClear color="red" size={30}/>
+              <div className="relative">
+                <Input
+                  placeholder="Search for data... "
+                  prefix={<IoSearch size={17.5} />}
+                  className="w-[250px] h-[46px] lg:w-[323px] bg-transparent"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                {searchQuery.length > 0 ? (
+                  <div
+                    className="absolute right-[5px] top-[20%] z-[500] cursor-pointer"
+                    onClick={() => {
+                      setSearchQuery("");
+                    }}
+                  >
+                    <MdClear color="red" size={30} />
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
-  ):""
-}
-              
-       </div>
-
-     
 
               <Button
                 className={`h-[46px] w-[18%  ${
@@ -321,7 +296,13 @@ onClick={()=>{
                         label="Country"
                         placeholder="Select country"
                         required={false}
-                        options={[{ value: "Nigeria", label: "Nigeria" ,key:"Nigeria"}]}
+                        options={[
+                          {
+                            value: "Nigeria",
+                            label: "Nigeria",
+                            key: "Nigeria",
+                          },
+                        ]}
                         // options={countryOptions}
                         value={filterValues.country || undefined}
                         onChange={(value) =>
@@ -420,20 +401,17 @@ onClick={()=>{
             ) : (
               <p className="text-[14px] font-bold"> Not found</p>
             )}
-{
-
-currentItems.length > 0 ? (
-<Pagination
-              className="my-6 flex justify-end"
-              current={currentPage}
-              pageSize={lgasPerPage}
-              total={AQI_datas.length}
-              onChange={onPageChange}
-            />
-):
-""
-}
-            
+            {currentItems.length > 0 ? (
+              <Pagination
+                className="my-6 flex justify-end"
+                current={currentPage}
+                pageSize={lgasPerPage}
+                total={AQI_datas.length}
+                onChange={onPageChange}
+              />
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </Container>
