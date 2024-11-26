@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet"; // Import Leaflet for custom icons
 
@@ -49,7 +49,7 @@ const MapHighlights = () => {
                 position={[device.lat, device.lng]}
                 icon={L.divIcon({
                   className: "device-label", // Custom class to style the label
-                  html: `
+                  html: ` 
                     <div style="width: 100px; display: flex; align-items: center; ">
                       <img src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png" 
                            style=" height: 30px; margin-right: 8px;" />
@@ -57,7 +57,17 @@ const MapHighlights = () => {
                     </div>
                   `, // Custom HTML content for the marker and label
                 })}
-              />
+              >
+                <Tooltip>
+                  <div>
+                    <strong className="text-xl">{device.name}</strong>
+                    <br />
+                    <span className="text-xl">
+                      Lat: {device.lat.toFixed(4)}, Lng: {device.lng.toFixed(4)}
+                    </span>
+                  </div>
+                </Tooltip>
+              </Marker>
             ))}
           </MapContainer>
         </div>
