@@ -1,21 +1,39 @@
-import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet"; // Import Leaflet for custom icons
+import React from "react";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
+import useAirMonitoring from "@hooks/useAirMonitoring";
 
-const devices = [
-  { id: 1, name: "Device A", lat: 6.5244, lng: 3.3792, state: "Lagos" }, // Lagos
-  { id: 2, name: "Device B", lat: 7.3775, lng: 3.947, state: "Abeokuta" }, // Abeokuta
-  { id: 3, name: "Device C", lat: 9.0765, lng: 7.3986, state: "Abuja" }, // Abuja
-  { id: 4, name: "Device D", lat: 6.4654, lng: 7.5464, state: "Enugu" }, // Enugu
-  { id: 5, name: "Device E", lat: 10.3158, lng: 9.8442, state: "Jos" }, // Jos
-  { id: 6, name: "Device F", lat: 11.7459, lng: 11.9661, state: "Maiduguri" }, // Maiduguri
-  { id: 7, name: "Device G", lat: 4.8156, lng: 7.0498, state: "Port Harcourt" }, // Port Harcourt
-  { id: 8, name: "Device H", lat: 8.4905, lng: 4.5481, state: "Ilorin" }, // Ilorin
-  { id: 9, name: "Device I", lat: 12.0022, lng: 8.5919, state: "Kano" }, // Kano
-  { id: 10, name: "Device J", lat: 7.8735, lng: 5.0745, state: "Akure" }, // Akure
-];
+// Define the type of each device in AirMonitoringDetails
+interface Device {
+  id: string;
+  lat: number;
+  lon: number;
+  location: string;
+}
+
+const containerStyle = {
+  width: "100%",
+  height: "500px",
+};
+
+const center = {
+  lat: 9.082, // Nigeria's approximate center
+  lng: 8.6753,
+};
 
 const MapHighlights = () => {
+  const { AirMonitoringDetails } = useAirMonitoring() as {
+    AirMonitoringDetails: Device[];
+  };
+
+  const [selectedDevice, setSelectedDevice] = React.useState<Device | null>(
+    null
+  );
+
   return (
     <div className="pb-[40px] lg:py-[40px]">
       <div className="flex flex-col gap-[8px] justify-center items-center">
@@ -34,44 +52,49 @@ const MapHighlights = () => {
         </h3>
 
         <div className="w-full mt-[12px]">
-          <MapContainer
-            center={{ lat: 9.082, lng: 8.6753 }} // Nigeria's approximate center
-            zoom={6} // Adjust zoom to fit all markers
-            style={{ height: "500px", width: "100%" }}
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution="&copy; OpenStreetMap contributors"
-            />
-            {devices.map((device) => (
-              <Marker
-                key={device.id}
-                position={[device.lat, device.lng]}
-                icon={L.divIcon({
-                  className: "device-label", // Custom class to style the label
-                  html: ` 
-                    <div style="width: 100px; display: flex; align-items: center; ">
-                      <img src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png" 
-                           style=" height: 30px; margin-right: 8px;" />
-                      <span style="font-size: 12px; font-weight: 600; color: black; background-color: white; padding: 3px 5px; border-radius: 10px;">${device.name}</span>
-                    </div>
-                  `, // Custom HTML content for the marker and label
-                })}
-              >
-                <Tooltip>
-                  <div>
-                    <span className="text-xl font-[600]">{device.name}</span>
-                    <br />
-                    <span className="text-lg">{device.state}</span>
-                    <br />
-                    <span className="text-lg">
-                      Lat: {device.lat.toFixed(4)}, Lng: {device.lng.toFixed(4)}
-                    </span>
+          <LoadScript googleMapsApiKey="AIzaSyDzofLb9GTpwTJDg2U-l0Ez-Ya4iw5dVss">
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={center}
+              zoom={6}
+            >
+              {AirMonitoringDetails &&
+                AirMonitoringDetails.map((device) => (
+                  <Marker
+                    key={device.id}
+                    position={{ lat: device.lat, lng: device.lon }}
+                    onClick={() => setSelectedDevice(device)}
+                    icon={{
+                      url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // Red dot marker
+                      scaledSize: new window.google.maps.Size(40, 40), // Adjust the size of the marker
+                    }}
+                    // labelOrigin={new window.google.maps.Point(0, -30)}
+                  />
+                ))}
+
+              {selectedDevice && (
+                <InfoWindow
+                  position={{
+                    lat: selectedDevice.lat,
+                    lng: selectedDevice.lon,
+                  }}
+                  onCloseClick={() => setSelectedDevice(null)}
+                >
+                  <div className="flex flex-col bg-primaryColor text-white p-[10px] rounded-[8px] w-[150px]">
+                    <h4 className="text-lg font-semibold">
+                      {selectedDevice.location}
+                    </h4>
+                    <p className="text-sm text-left">
+                      Latitude: {selectedDevice.lat}
+                    </p>
+                    <p className="text-sm text-left">
+                      Longitude: {selectedDevice.lon}
+                    </p>
                   </div>
-                </Tooltip>
-              </Marker>
-            ))}
-          </MapContainer>
+                </InfoWindow>
+              )}
+            </GoogleMap>
+          </LoadScript>
         </div>
       </div>
     </div>

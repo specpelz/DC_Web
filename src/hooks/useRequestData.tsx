@@ -48,7 +48,7 @@ const useRequestData = () => {
         "https://datacab-server-8x13.onrender.com/air-monitoring/request-data",
         requestBody
       );
-      console.log("response", response);
+      // console.log("response", response);
       if (response.status === 201 || response.data.status === "success") {
         message.success(response.data.message || "Email sent successfully!");
         setSuccess(true);
