@@ -58,7 +58,7 @@ const AirReading = () => {
     return response.json();
   };
 
-  const {data} = useQuery<AMD_type>({
+  const {isLoading,data} = useQuery<AMD_type>({
     queryKey: ["get_all_air_reading_data"],
     queryFn: fetch_air_reading_data,
   
@@ -73,7 +73,7 @@ const AirReading = () => {
   const set_aqt_data = useAqtStore((state) => state.set_AQI_datas);
 
   const [filteredItems, setFilteredItems] = useState<AMD_type_v2[] | undefined>([]);
-  const [loadinglgas, setLoadinglgas] = useState<boolean>(true);
+  // const [loadinglgas, setLoadinglgas] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -197,10 +197,10 @@ const AirReading = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoadinglgas(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => setLoadinglgas(false), 2000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   const onPageChange = (page: number) => {
     setCurrentPage(page);
@@ -225,24 +225,24 @@ const AirReading = () => {
     setCurrentPage(1);
   }, [searchQuery, aqt_data]);
 
-  const lgasPerPage = 9;
+  const dataPerPage = 9;
 
   // const currentItems = aqt_data?.slice(
-  //   (currentPage - 1) * lgasPerPage,
-  //   currentPage * lgasPerPage
+  //   (currentPage - 1) * dataPerPage,
+  //   currentPage * dataPerPage
   // );
   const currentItems = filteredItems?.slice(
-    (currentPage - 1) * lgasPerPage,
-    currentPage * lgasPerPage
+    (currentPage - 1) * dataPerPage,
+    currentPage * dataPerPage
   );
 
   // const currentItems = the_FilteredData.length >0 ? the_FilteredData.slice(
-  //   (currentPage - 1) * lgasPerPage,
-  //   currentPage * lgasPerPage)
+  //   (currentPage - 1) * dataPerPage,
+  //   currentPage * dataPerPage)
   //   :
   //   filteredItems.slice(
-  //     (currentPage - 1) * lgasPerPage,
-  //     currentPage * lgasPerPage
+  //     (currentPage - 1) * dataPerPage,
+  //     currentPage * dataPerPage
   // )
 
   const handleNavigate = (item: AMD_type_v2) => {
@@ -401,9 +401,9 @@ const AirReading = () => {
 
             {/* AIR READING POSTS>>>>>>>>>>>>>>>>>>>>>> */}
 
-            {loadinglgas === true ? (
+            {isLoading === true ? (
               <div className="my-[40px] grid grid-cols-3 gap-[19px]">
-                {Array.from({ length: lgasPerPage }).map((_, index) => (
+                {Array.from({ length: dataPerPage }).map((_, index) => (
                   <div
                     key={index}
                     className="relative w-full h-[180px] flex flex-col gap-2"
@@ -416,7 +416,7 @@ const AirReading = () => {
                   </div>
                 ))}
               </div>
-            ) : currentItems?.length !== 0 ? (
+            ) : currentItems && currentItems.length > 0 ? (
               <div className="my-[40px] grid grid-cols-1 gap-y-[30px] md:gap-[19px] md:grid-cols-2 xl:grid-cols-3">
                 {currentItems?.map((item) => (
                   <AQ_Card item={item} clickFN={() => handleNavigate(item)} />
@@ -425,11 +425,11 @@ const AirReading = () => {
             ) : (
               <p className="text-[14px] font-bold"> Not found</p>
             )}
-            {currentItems?.length !== 0 ? (
+            {currentItems && currentItems.length > 0 ? (
               <Pagination
                 className="my-6 flex justify-end"
                 current={currentPage}
-                pageSize={lgasPerPage}
+                pageSize={dataPerPage}
                 total={aqt_data?.length}
                 // total={AQI_datas.length}
                 onChange={onPageChange}
@@ -441,9 +441,13 @@ const AirReading = () => {
         </div>
       </Container>
 
-      <div className="my-[40px]">
-        <MapHighlights />
-      </div>
+{
+  isLoading === true ? "":(
+    <div className="my-[40px]">
+    <MapHighlights />
+  </div>
+  )
+}
 
       <Container>
         <Donors />
