@@ -416,7 +416,7 @@ const AirReading = () => {
                   </div>
                 ))}
               </div>
-            ) : currentItems && currentItems.length > 0 ? (
+            ) : currentItems?.length !== 0 ? (
               <div className="my-[40px] grid grid-cols-1 gap-y-[30px] md:gap-[19px] md:grid-cols-2 xl:grid-cols-3">
                 {currentItems?.map((item) => (
                   <AQ_Card item={item} clickFN={() => handleNavigate(item)} />
@@ -425,7 +425,7 @@ const AirReading = () => {
             ) : (
               <p className="text-[14px] font-bold"> Not found</p>
             )}
-            {currentItems && currentItems.length > 0 ? (
+            {currentItems?.length !== 0 ? (
               <Pagination
                 className="my-6 flex justify-end"
                 current={currentPage}
