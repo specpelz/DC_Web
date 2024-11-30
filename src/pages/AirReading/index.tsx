@@ -5,7 +5,7 @@ import { IoSearch } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AQ_Card from "@components/AQ_card";
-import MapHighlights from "./map";
+// import MapHighlights from "./map";
 import Container from "@components/container";
 import Donors from "@pages/home/sections/donors";
 import Select_v2 from "@components/select/Select_v2";
@@ -14,6 +14,7 @@ import useAqtStore from "@store/airReading";
 import { MdClear } from "react-icons/md";
 import { BASE_URL } from "@api/index";
 import { useQuery } from "@tanstack/react-query";
+import MapHighlights from "@pages/home/sections/map";
 
 interface SelectOption {
   value: string;
@@ -445,29 +446,6 @@ const AirReading = () => {
       </div>
 
       <Container>
-        {/* <div className="text-center font-[700] text-[24px] text-[#2C2C2C]">
-          Our Donors
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-[40px] mt-[20px] mb-[73px]">
-
-          {
-            donors.map((item,index)=>(
-              <div
-              key={index.toString()}>
-              <div className="flex justify-center">
-                <img src={item.logo} alt="logo" />
-              </div>
-              <div className="font-[600] text-[14px] text-center">
-              {item.text1}
-              </div>
-              <div className="font-[600] text-[14px] text-center">
-             {item.text2}
-              </div>
-            </div>
-            ))
-          }
- 
-        </div> */}
         <Donors />
       </Container>
     </MainLayout>
