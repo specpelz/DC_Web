@@ -9,7 +9,7 @@ import AQ_Card from "@components/AQ_card";
 import Container from "@components/container";
 import Donors from "@pages/home/sections/donors";
 import Select_v2 from "@components/select/Select_v2";
-import { AMD_type, AMD_type_v2} from "../../types/airMonitoring";
+import { AMD_type, AMD_type_v2 } from "../../types/airMonitoring";
 import useAqtStore from "@store/airReading";
 import { MdClear } from "react-icons/md";
 import { BASE_URL } from "@api/index";
@@ -22,31 +22,17 @@ interface SelectOption {
   key: string;
 }
 
-
-
-
 interface FilterValues {
   community: string | null;
   location: string | null;
-
 }
 
 const AirReading = () => {
-  
-
-
-
-
-
-
-
-
-
   const fetch_air_reading_data = async () => {
     const response = await fetch(`${BASE_URL}/air-monitoring`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",   
+        "Content-Type": "application/json",
       },
     });
 
@@ -58,21 +44,17 @@ const AirReading = () => {
     return response.json();
   };
 
-  const {isLoading,data} = useQuery<AMD_type>({
+  const { isLoading, data } = useQuery<AMD_type>({
     queryKey: ["get_all_air_reading_data"],
     queryFn: fetch_air_reading_data,
-  
   });
- 
-
-
-
-
 
   const aqt_data = useAqtStore((state) => state.AQI_datas);
   const set_aqt_data = useAqtStore((state) => state.set_AQI_datas);
 
-  const [filteredItems, setFilteredItems] = useState<AMD_type_v2[] | undefined>([]);
+  const [filteredItems, setFilteredItems] = useState<AMD_type_v2[] | undefined>(
+    []
+  );
   // const [loadinglgas, setLoadinglgas] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -81,7 +63,6 @@ const AirReading = () => {
   useEffect(() => {
     set_aqt_data(data?.data);
     setFilteredItems(data?.data);
- 
   }, []);
 
   // const [countryOptions, setCountryOptions] = useState<SelectOption[]>([]);
@@ -101,38 +82,30 @@ const AirReading = () => {
   const generateFilterOptions = () => {
     // First, ensure aqt_data is not undefined
     if (!aqt_data) return;
-  
+
     // Process the data with a proper type
-    const processedData = aqt_data.map(data => ({
+    const processedData = aqt_data.map((data) => ({
       ...data,
       community: data.serial_number,
-      location: data.location
+      location: data.location,
     }));
-  
+
     // Create a type-safe unique options generator
-    const uniqueOptions = <K extends keyof typeof processedData[number]>(field: K) => {
-      return Array.from(
-        new Set(processedData.map(item => item[field]))
-      ).map((value, index) => ({
-        value: value as string,
-        label: value as string,
-        key: index.toString(),
-      }));
+    const uniqueOptions = <K extends keyof (typeof processedData)[number]>(
+      field: K
+    ) => {
+      return Array.from(new Set(processedData.map((item) => item[field]))).map(
+        (value, index) => ({
+          value: value as string,
+          label: value as string,
+          key: index.toString(),
+        })
+      );
     };
-  
-    setCommunityOption(uniqueOptions('community'));
-    setLocationOption(uniqueOptions('location'));
+
+    setCommunityOption(uniqueOptions("community"));
+    setLocationOption(uniqueOptions("location"));
   };
-
-
-
-
-
-
-
-
-
-
 
   useEffect(() => {
     if (showFilter) {
@@ -159,14 +132,15 @@ const AirReading = () => {
 
   const applyFilter = () => {
     const filtered = aqt_data?.filter((item) => {
-      const communityMatch = 
-        !filterValues.community || item.serial_number === filterValues.community;
-      const locationMatch = 
+      const communityMatch =
+        !filterValues.community ||
+        item.serial_number === filterValues.community;
+      const locationMatch =
         !filterValues.location || item.location === filterValues.location;
-  
+
       return communityMatch && locationMatch;
     });
-  
+
     setFilteredItems(filtered);
     setCurrentPage(1); // Reset to first page after filtering
     setShowFilter(false);
@@ -215,8 +189,7 @@ const AirReading = () => {
         const searchLower = searchQuery.toLowerCase();
         return (
           AQI_data.location.toLowerCase().includes(searchLower) ||
-          AQI_data.serial_number.toLowerCase().includes(searchLower) 
-        
+          AQI_data.serial_number.toLowerCase().includes(searchLower)
         );
       });
     }
@@ -344,7 +317,9 @@ const AirReading = () => {
                         required={false}
                         options={locationOption}
                         value={filterValues.location || undefined}
-                        onChange={(value) => handleFilterChange(value, "location")}
+                        onChange={(value) =>
+                          handleFilterChange(value, "location")
+                        }
                       />
                     </div>
                     {/* <div className="lg:w-[25%] ">
@@ -366,7 +341,9 @@ const AirReading = () => {
                         placeholder="Select city"
                         options={communityOption}
                         value={filterValues.community || undefined}
-                        onChange={(value) => handleFilterChange(value, "community")}
+                        onChange={(value) =>
+                          handleFilterChange(value, "community")
+                        }
                       />
                     </div>
                   </div>
@@ -379,21 +356,18 @@ const AirReading = () => {
                     >
                       Cancel
                     </Button>
-                  
-                      <Button
-                        disabled={filter_input_values ? false : true}
-                        // disabled={
-                        //   isFilterActive ? true : filter_input_values ? false : true
-                        // }
-                        type="primary"
-                        onClick={applyFilter}
-                        className="w-[234px] h-[48px] text-[16px] font-[400]  bg-BrandPrimary"
-                      >
-                        <div className="text-[16px] font-[400]">
-                          Apply Filter
-                        </div>
-                      </Button>
-               
+
+                    <Button
+                      disabled={filter_input_values ? false : true}
+                      // disabled={
+                      //   isFilterActive ? true : filter_input_values ? false : true
+                      // }
+                      type="primary"
+                      onClick={applyFilter}
+                      className="w-[234px] h-[48px] text-[16px] font-[400]  bg-BrandPrimary"
+                    >
+                      <div className="text-[16px] font-[400]">Apply Filter</div>
+                    </Button>
                   </div>
                 </div>
               )}
@@ -441,13 +415,13 @@ const AirReading = () => {
         </div>
       </Container>
 
-{
-  isLoading === true ? "":(
-    <div className="my-[40px]">
-    <MapHighlights />
-  </div>
-  )
-}
+      {isLoading === true ? (
+        ""
+      ) : (
+        <div className="my-[40px]">
+          <MapHighlights />
+        </div>
+      )}
 
       <Container>
         <Donors />
