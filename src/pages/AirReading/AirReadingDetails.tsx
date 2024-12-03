@@ -1,6 +1,6 @@
 import Container from "@components/container";
 import MainLayout from "@layouts/MainLayout";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { Button, Divider } from "antd";
@@ -24,6 +24,7 @@ import {
 import moment from "moment";
 import GraphIndicator from "@components/GraphIndicator";
 import MapHighlights from "@pages/home/sections/map";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CustomBar = (props: any) => {
@@ -65,7 +66,9 @@ const AirReadingDetails = () => {
 
   const location = useLocation();
   const { item } = location.state || {};
- console.log(location," Calling you Ole")
+ console.log(item," Calling you Ole")
+
+
   const colorRange = [
     {
       color: "/lemon.svg",
@@ -374,13 +377,14 @@ const AirReadingDetails = () => {
   return (
     <MainLayout>
       <Container>
-        <div className="flex flex-col lg:flex-row justify-between lg:items-end">
-          <div>
-            <div className="text-[24px] md:text-[32px] font-[700] text-[#2C2C2C] mt-[60px]">
-              Air Quality in {item.serial_number}
-            </div>
-
+        <div className="flex flex-col lg:flex-row justify-between lg:items-end mt-[60px]">
+          <div className="flex flex-col gap-2 text-[24px] md:text-[32px] font-[700] text-[#2C2C2C] ">
+            <Link to="/air-reading" className="w-[50px]   ">
+              <IoArrowBackOutline size={20} />
+            </Link>
+            Air Quality in {item.serial_number}
           </div>
+
           <Button
             className="h-[46px] w-[30%] lg:w-auto bg-transparent mt-5 lg:mt-0"
             // onClick={showModal}
