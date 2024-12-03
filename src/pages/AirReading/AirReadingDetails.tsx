@@ -1,7 +1,7 @@
 import Container from "@components/container";
 import MainLayout from "@layouts/MainLayout";
 import { Link, useLocation } from "react-router-dom";
-import MapHighlights from "./map";
+
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { Button, Divider } from "antd";
 import { useState } from "react";
@@ -21,6 +21,9 @@ import {
   ResponsiveContainer,
   Rectangle,
 } from "recharts";
+import moment from "moment";
+import GraphIndicator from "@components/GraphIndicator";
+import MapHighlights from "@pages/home/sections/map";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,7 +66,8 @@ const AirReadingDetails = () => {
 
   const location = useLocation();
   const { item } = location.state || {};
-  console.log("item", item);
+ console.log(item," Calling you Ole")
+
 
   const colorRange = [
     {
@@ -76,7 +80,7 @@ const AirReadingDetails = () => {
     },
     {
       color: "/brown.svg",
-      text: "Unhealthy for sensitive groups",
+      text: "Unhealthy for sensitive groups(USG)",
     },
     {
       color: "/red.svg",
@@ -95,17 +99,17 @@ const AirReadingDetails = () => {
   const pm = [
     {
       text: "PM 1",
-      value: "11",
+      value: item.airReading.length > 0 ? item.airReading[0].pm01_0 : "No data" ,
       info: "",
     },
     {
       text: "PM 2.5",
-      value: "18",
+      value: item.airReading.length > 0 ? item.airReading[0].pm02_5 : "No data" ,
       info: "",
     },
     {
       text: "PM 10",
-      value: "18",
+      value: item.airReading.length > 0 ? item.airReading[0].pm10_0: "No data",
       info: "",
     },
   ];
@@ -113,17 +117,17 @@ const AirReadingDetails = () => {
   const atmos = [
     {
       text: "Humidity",
-      value: "83",
+      value: item.airReading.length > 0 ? item.airReading[0].humidity: "No data",
       info: "",
     },
     {
-      text: "Heat Index",
-      value: "28",
+      text: "Pressure",
+      value: item.airReading.length > 0 ? item.airReading[0].pressure: "No data",
       info: "",
     },
     {
       text: "Voltage",
-      value: "3.7",
+      value: item.airReading.length > 0 ? item.airReading[0].voltage: "No data",
       info: "",
     },
   ];
@@ -137,182 +141,195 @@ const AirReadingDetails = () => {
 
   const aqr_days = [
     {
-      value: "63",
-      day: "Monday",
-      date: "1",
-      month: "November",
+      value: item.histories.length > 0 ? item.histories[0].aqi: "No data",
+      day:item.histories.length > 0 ? moment(item.histories[0].date).format("dddd"):"",
+      date: item.histories.length > 0 ? moment(item.histories[0].date).format("DD"):"",
+      month: item.histories.length > 0 ? moment(item.histories[0].date).format("MMMM"):"",
     },
     {
-      value: "-",
-      day: "Tuesday",
-      date: "2",
-      month: "November",
+      value: item.histories.length > 1 ? item.histories[1].aqi: "No data",
+      day: item.histories.length > 1 ? moment(item.histories[1].date).format("dddd"):"",
+      date: item.histories.length > 1 ? moment(item.histories[1].date).format("DD"):"",
+      month: item.histories.length > 1 ? moment(item.histories[1].date).format("MMMM"):"",
     },
     {
-      value: "78",
-      day: "Wednesday",
-      date: "3",
-      month: "November",
+      value: item.histories.length > 2 ? item.histories[2].aqi: "No data",
+      day: item.histories.length > 2 ? moment(item.histories[2].date).format("dddd"):"",
+      date:item.histories.length > 2 ? moment(item.histories[2].date).format("DD"):"",
+      month: item.histories.length > 2 ? moment(item.histories[2].date).format("MMMM"):"",
     },
     {
-      value: "79",
-      day: "Thursday",
-      date: "4",
-      month: "November",
+      value: item.histories.length > 3 ? item.histories[3].aqi: "No data",
+      day: item.histories.length > 3 ? moment(item.histories[3].date).format("dddd"):"",
+      date: item.histories.length > 3 ? moment(item.histories[3].date).format("DD"):"",
+      month: item.histories.length > 3 ? moment(item.histories[3].date).format("MMMM"):"",
     },
     {
-      value: "94",
-      day: "Friday",
-      date: "5",
-      month: "November",
+      value: item.histories.length > 4 ? item.histories[4].aqi: "No data",
+      day:item.histories.length > 4 ? moment(item.histories[4].date).format("dddd"):"",
+      date: item.histories.length > 4 ? moment(item.histories[4].date).format("DD"):"",
+      month: item.histories.length > 4 ? moment(item.histories[4].date).format("MMMM"):"",
     },
     {
-      value: "88",
-      day: "Saturday",
-      date: "6",
-      month: "November",
+      value: item.histories.length > 5 ? item.histories[5].aqi: "No data",
+      day: item.histories.length > 5 ? moment(item.histories[5].date).format("dddd"):"",
+      date: item.histories.length > 5 ? moment(item.histories[5].date).format("DD"):"",
+      month:item.histories.length > 5 ? moment(item.histories[5].date).format("MMMM"):"",
     },
     {
-      value: "61",
-      day: "Sunday",
-      date: "7",
-      month: "November",
+      value: item.histories.length > 6 ? item.histories[6].aqi: "No data",
+      day: item.histories.length > 6 ? moment(item.histories[6].date).format("dddd"):"",
+      date: item.histories.length > 6 ? moment(item.histories[6].date).format("DD"):"",
+      month: item.histories.length > 6 ? moment(item.histories[6].date).format("MMMM"):"",
     },
+ 
   ];
 
-  const pm1 = [
+  const pm1 =[
     {
-      value: "11",
-      day: "Monday",
-      date: "1",
-      month: "November",
+      value: item.histories.length > 0 ? item.histories[0].pm1_0: "No data",
+      day:item.histories.length > 0 ? moment(item.histories[0].date).format("dddd"):"",
+      date: item.histories.length > 0 ? moment(item.histories[0].date).format("DD"):"",
+      month: item.histories.length > 0 ? moment(item.histories[0].date).format("MMMM"):""
     },
     {
-      value: "18",
-      day: "Tuesday",
-      date: "2",
-      month: "November",
+      value: item.histories.length > 1 ? item.histories[1].pm1_0: "No data",
+      day: item.histories.length > 1 ? moment(item.histories[1].date).format("dddd"):"",
+      date: item.histories.length > 1 ? moment(item.histories[1].date).format("DD"):"",
+      month: item.histories.length > 1 ? moment(item.histories[1].date).format("MMMM"):"",
+
     },
     {
-      value: "12",
-      day: "Wednesday",
-      date: "3",
-      month: "November",
+      value: item.histories.length > 2 ? item.histories[2].pm1_0: "No data",
+      day: item.histories.length > 2 ? moment(item.histories[2].date).format("dddd"):"",
+      date:item.histories.length > 2 ? moment(item.histories[2].date).format("DD"):"",
+      month: item.histories.length > 2 ? moment(item.histories[2].date).format("MMMM"):"",
+
     },
     {
-      value: "14",
-      day: "Thursday",
-      date: "4",
-      month: "November",
+      value: item.histories.length > 3 ? item.histories[3].pm1_0: "No data",
+      day: item.histories.length > 3 ? moment(item.histories[3].date).format("dddd"):"",
+      date: item.histories.length > 3 ? moment(item.histories[3].date).format("DD"):"",
+      month: item.histories.length > 3 ? moment(item.histories[3].date).format("MMMM"):"",
+
     },
     {
-      value: "18",
-      day: "Friday",
-      date: "5",
-      month: "November",
+      value: item.histories.length > 4 ? item.histories[4].pm1_0: "No data",
+      day:item.histories.length > 4 ? moment(item.histories[4].date).format("dddd"):"",
+      date: item.histories.length > 4 ? moment(item.histories[4].date).format("DD"):"",
+      month: item.histories.length > 4 ? moment(item.histories[4].date).format("MMMM"):"",
+
     },
     {
-      value: "18",
-      day: "Saturday",
-      date: "6",
-      month: "November",
+      value: item.histories.length > 5 ? item.histories[5].pm1_0: "No data",
+      day: item.histories.length > 5 ? moment(item.histories[5].date).format("dddd"):"",
+      date: item.histories.length > 5 ? moment(item.histories[5].date).format("DD"):"",
+      month:item.histories.length > 5 ? moment(item.histories[5].date).format("MMMM"):"",
+
     },
     {
-      value: "9",
-      day: "Sunday",
-      date: "7",
-      month: "November",
+      value: item.histories.length > 6 ? item.histories[6].pm1_0: "No data",
+      day: item.histories.length > 6 ? moment(item.histories[6].date).format("dddd"):"",
+      date: item.histories.length > 6 ? moment(item.histories[6].date).format("DD"):"",
+      month: item.histories.length > 6 ? moment(item.histories[6].date).format("MMMM"):"",
+
     },
+ 
   ];
 
-  const pm25 = [
+
+  const pm25 =[
     {
-      value: "11",
-      day: "Monday",
-      date: "1",
-      month: "November",
+      value: item.histories.length > 0 ? item.histories[0].pm2_5: "No data",
+      day:item.histories.length > 0 ? moment(item.histories[0].date).format("dddd"):"",
+      date: item.histories.length > 0 ? moment(item.histories[0].date).format("DD"):"",
+      month: item.histories.length > 0 ? moment(item.histories[0].date).format("MMMM"):"",
     },
     {
-      value: "18",
-      day: "Tuesday",
-      date: "2",
-      month: "November",
+      value: item.histories.length > 1 ? item.histories[1].pm2_5: "No data",
+      day: item.histories.length > 1 ? moment(item.histories[1].date).format("dddd"):"",
+      date: item.histories.length > 1 ? moment(item.histories[1].date).format("DD"):"",
+      month: item.histories.length > 1 ? moment(item.histories[1].date).format("MMMM"):"",
     },
     {
-      value: "18",
-      day: "Wednesday",
-      date: "3",
-      month: "November",
+      value: item.histories.length > 2 ? item.histories[2].pm2_5: "No data",
+      day: item.histories.length > 2 ? moment(item.histories[2].date).format("dddd"):"",
+      date:item.histories.length > 2 ? moment(item.histories[2].date).format("DD"):"",
+      month: item.histories.length > 2 ? moment(item.histories[2].date).format("MMMM"):"",
     },
     {
-      value: "9",
-      day: "Thursday",
-      date: "4",
-      month: "November",
+      value: item.histories.length > 3 ? item.histories[3].pm2_5: "No data",
+      day: item.histories.length > 3 ? moment(item.histories[3].date).format("dddd"):"",
+      date: item.histories.length > 3 ? moment(item.histories[3].date).format("DD"):"",
+      month: item.histories.length > 3 ? moment(item.histories[3].date).format("MMMM"):"",
     },
     {
-      value: "18",
-      day: "Friday",
-      date: "5",
-      month: "November",
+      value: item.histories.length > 4 ? item.histories[4].pm2_5: "No data",
+      day:item.histories.length > 4 ? moment(item.histories[4].date).format("dddd"):"",
+      date: item.histories.length > 4 ? moment(item.histories[4].date).format("DD"):"",
+      month: item.histories.length > 4 ? moment(item.histories[4].date).format("MMMM"):"",
     },
     {
-      value: "18",
-      day: "Saturday",
-      date: "6",
-      month: "November",
+      value: item.histories.length > 5 ? item.histories[5].pm2_5: "No data",
+      day: item.histories.length > 5 ? moment(item.histories[5].date).format("dddd"):"",
+      date: item.histories.length > 5 ? moment(item.histories[5].date).format("DD"):"",
+      month:item.histories.length > 5 ? moment(item.histories[5].date).format("MMMM"):"",
+
     },
     {
-      value: "9",
-      day: "Sunday",
-      date: "7",
-      month: "November",
+      value: item.histories.length > 6 ? item.histories[6].pm2_5: "No data",
+      day: item.histories.length > 6 ? moment(item.histories[6].date).format("dddd"):"",
+      date: item.histories.length > 6 ? moment(item.histories[6].date).format("DD"):"",
+      month: item.histories.length > 6 ? moment(item.histories[6].date).format("MMMM"):"",
+
     },
+ 
   ];
 
-  const pm10 = [
+  const pm10 =[
     {
-      value: "10",
-      day: "Monday",
-      date: "1",
-      month: "November",
+      value: item.histories.length > 0 ? item.histories[0].pm10_0: "No data",
+      day:item.histories.length > 0 ? moment(item.histories[0].date).format("dddd"):"",
+      date: item.histories.length > 0 ? moment(item.histories[0].date).format("DD"):"",
+      month: item.histories.length > 0 ? moment(item.histories[0].date).format("MMMM"):"",
     },
     {
-      value: "18",
-      day: "Tuesday",
-      date: "2",
-      month: "November",
+      value: item.histories.length > 1 ? item.histories[1].pm10_0: "No data",
+      day: item.histories.length > 1 ? moment(item.histories[1].date).format("dddd"):"",
+      date: item.histories.length > 1 ? moment(item.histories[1].date).format("DD"):"",
+      month: item.histories.length > 1 ? moment(item.histories[1].date).format("MMMM"):"",
     },
     {
-      value: "16",
-      day: "Wednesday",
-      date: "3",
-      month: "November",
+      value: item.histories.length > 2 ? item.histories[2].pm10_0: "No data",
+      day: item.histories.length > 2 ? moment(item.histories[2].date).format("dddd"):"",
+      date:item.histories.length > 2 ? moment(item.histories[2].date).format("DD"):"",
+      month: item.histories.length > 2 ? moment(item.histories[2].date).format("MMMM"):"",
     },
     {
-      value: "18",
-      day: "Thursday",
-      date: "4",
-      month: "November",
+      value: item.histories.length > 3 ? item.histories[3].pm10_0: "No data",
+      day: item.histories.length > 3 ? moment(item.histories[3].date).format("dddd"):"",
+      date: item.histories.length > 3 ? moment(item.histories[3].date).format("DD"):"",
+      month: item.histories.length > 3 ? moment(item.histories[3].date).format("MMMM"):"",
     },
     {
-      value: "18",
-      day: "Friday",
-      date: "5",
-      month: "November",
+      value: item.histories.length > 4 ? item.histories[4].pm10_0: "No data",
+      day:item.histories.length > 4 ? moment(item.histories[4].date).format("dddd"):"",
+      date: item.histories.length > 4 ? moment(item.histories[4].date).format("DD"):"",
+      month: item.histories.length > 4 ? moment(item.histories[4].date).format("MMMM"):"",
     },
     {
-      value: "19",
-      day: "Saturday",
-      date: "6",
-      month: "November",
+      value: item.histories.length > 5 ? item.histories[5].pm10_0: "No data",
+      day: item.histories.length > 5 ? moment(item.histories[5].date).format("dddd"):"",
+      date: item.histories.length > 5 ? moment(item.histories[5].date).format("DD"):"",
+      month:item.histories.length > 5 ? moment(item.histories[5].date).format("MMMM"):"",
     },
     {
-      value: "29",
-      day: "Sunday",
-      date: "7",
-      month: "November",
+      value: item.histories.length > 6 ? item.histories[6].pm10_0: "No data",
+      day: item.histories.length > 6 ? moment(item.histories[6].date).format("dddd"):"",
+      date: item.histories.length > 6 ? moment(item.histories[6].date).format("DD"):"",
+      month: item.histories.length > 6 ? moment(item.histories[6].date).format("MMMM"):"",
     },
+ 
   ];
 
   const getAQRGrade = (aqrValue: string) => {
@@ -326,7 +343,7 @@ const AirReadingDetails = () => {
         text = "Moderate";
         break;
       case Number(aqrValue) > 100 && Number(aqrValue) <= 150:
-        text = "Unhealthy for sensitive groups";
+        text = "USG";
         break;
       case Number(aqrValue) > 150 && Number(aqrValue) <= 200:
         text = "Unhealthy";
@@ -396,7 +413,7 @@ const AirReadingDetails = () => {
             Current reading
           </div>
           <div className="text-[18px] font-[500] text-[#757575]">
-            Last Updated:{item.date}
+            Last Updated:{moment(item.updatedAt).format("YYYY-MM-DD")}
           </div>
 
           <div className="w-full xl:flex mt-[17px] gap-x-[20px]">
@@ -410,7 +427,8 @@ const AirReadingDetails = () => {
                     width: "100%",
                     height: "auto",
                   }}
-                  value={12.6}
+  
+                  value={item.airReading.length > 0 ? (item.airReading[0].aqi)/5:0}
                   type="semicircle"
                   labels={{
                     tickLabels: {
@@ -441,8 +459,9 @@ const AirReadingDetails = () => {
                       formatTextValue: (value: string) => {
                         const string_value = Number(value);
                         const num = string_value * 5;
-                        const text = "Good";
+                        const text = getAQRGrade(String((item.airReading.length > 0 ? item.airReading[0].aqi: "")));
                         return String(`${num} - ${text}`);
+                        // return String(`${num} - ${text}`);
                       },
                       // matchColorWithArc: true,
                       style: {
@@ -522,11 +541,11 @@ const AirReadingDetails = () => {
                   </div>
                 ))}
               </div>
-              <div className="w-full rid-cols-1 grid md:grid-cols-4 mt-[20px] gap-[20px]">
+              <div className="w-full rid-cols-1 grid md:grid-cols-2 mt-[20px] gap-[20px]">
                 <div className=" bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px]">
                   <div>
                     <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
-                      26&deg;C
+                      {item.airReading.length > 0 ? item.airReading[0].temperature: "No data"}&deg;C
                     </div>
                     <div className="flex justify-center items-center gap-x-[5px] text-[16px] font-[600] text-[#757575]">
                       Temperature
@@ -563,22 +582,7 @@ const AirReadingDetails = () => {
             <MapHighlights />
           </div>
         </div>
-        <div className="rounded-[20px] shadow-md w-full p-[20px] lg:p-[40px] mt-[50px]">
-          <div className="font-[700] text-[24px]">Map</div>
-          <p className="text-[14px] text-[#757575] mb-[20px]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborumLorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation.
-          </p>
-          <div className="text-[#1D48E7] text-[14px]">Learn More</div>
-        </div>
+ 
         <div className="rounded-[20px] shadow-md w-full p-[20px] lg:p-[40px] mt-[50px]">
           <div className="font-[700] text-[24px]">Historical Reading</div>
           <div className="w-[50%]">
@@ -596,8 +600,20 @@ const AirReadingDetails = () => {
           </div>
 
           <div className="xl:grid xl:grid-cols-2 xl:gap-[20px]">
-            <div className="mb-[20px] xl:mb-[unset] md:flex w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[400px]">
+            <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
+              <div className="text-[14px] mb-[20px]">Battery Voltage(V) with Charging Indicator</div>
+              <div className="mb-[20px] flex items-center justify-center gap-x-[10px]">
+              <GraphIndicator
+              color="#B3CF9B"
+              text="Voltage (V)"
+              />
+              <GraphIndicator
+              color="#FFECB4"
+              text="Charging"
+              />
+              </div>
               <ResponsiveContainer width="100%" height={350}>
+             
                 <ComposedChart data={data} margin={{ left: -30 }}>
                   <CartesianGrid stroke="#f5f5f5" />
                   <XAxis dataKey="name" />
@@ -636,7 +652,22 @@ const AirReadingDetails = () => {
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
-            <div className="mb-[20px] xl:mb-[unset] md:flex w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[400px]">
+            <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
+          <div className="flex items-center justify-between mb-[20px]">
+          <div className="text-[14px] ">Temperature</div>
+          <div className="text-[14px] "> <Button size="large">Change to F</Button></div>
+          </div>
+              <div className="mb-[20px] flex items-center justify-center gap-x-[10px]">
+              <GraphIndicator
+              color="#C2EEFE"
+              text="Temperature (°C)"
+              />
+              <GraphIndicator
+              color="#FFECB4"
+              text="Temperaure (F)"
+              />
+              </div>
+             
               <ResponsiveContainer width="100%" height={350}>
                 <ComposedChart data={data} margin={{ left: -30 }}>
                   <CartesianGrid stroke="#f5f5f5" />
@@ -675,7 +706,18 @@ const AirReadingDetails = () => {
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
-            <div className="mb-[20px] xl:mb-[unset] md:flex w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[400px]">
+            <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
+             
+            <div className="text-[14px] mb-[20px]">Air Quality Index</div>
+              <div className="mb-[20px] flex items-center justify-center gap-x-[10px]">
+              <GraphIndicator
+              color="#DC82E899"
+              text="AQI"
+              />
+          
+            
+          
+              </div>
               <ResponsiveContainer width="100%" height={350}>
                 <ComposedChart data={data} margin={{ left: -30 }}>
                   <CartesianGrid stroke="#f5f5f5" />
@@ -714,7 +756,16 @@ const AirReadingDetails = () => {
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
-            <div className="mb-[20px] xl:mb-[unset] md:flex w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[400px]">
+            <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
+             
+            <div className="text-[14px] mb-[20px]">Humidity</div>
+              <div className="mb-[20px] flex items-center justify-center gap-x-[10px]">
+              <GraphIndicator
+              color="#DC82E899"
+              text="Humidity (%)"
+              />
+          
+              </div>
               <ResponsiveContainer width="100%" height={350}>
                 <ComposedChart data={data} margin={{ left: -30 }}>
                   <CartesianGrid stroke="#f5f5f5" />
@@ -755,7 +806,22 @@ const AirReadingDetails = () => {
             </div>
           </div>
           <div className="mt-[20px]">
-            <div className="mb-[20px] xl:mb-[unset] md:flex w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[400px]">
+            <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
+            <div className="text-[14px] mb-[20px]">Air Quality PM (ug/m2)</div>
+              <div className="mb-[20px] flex items-center justify-center gap-x-[10px]">
+              <GraphIndicator
+              color="#B3CF9B"
+              text="PM1 (ug/m2)"
+              />
+              <GraphIndicator
+              color="#73ACC1"
+              text="PM2.5 (ug/m2)"
+              />
+              <GraphIndicator
+              color="#F9B8B0"
+              text="PM10 (ug/m2)"
+              />
+              </div>
               <ResponsiveContainer width="100%" height={350}>
                 <ComposedChart data={data2} margin={{ left: -30 }}>
                   <CartesianGrid stroke="#f5f5f5" />

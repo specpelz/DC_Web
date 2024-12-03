@@ -63,7 +63,9 @@ const AirReading = () => {
   useEffect(() => {
     set_aqt_data(data?.data);
     setFilteredItems(data?.data);
-  }, []);
+    // console.log(data?.data)
+ 
+  }, [filteredItems]);
 
   // const [countryOptions, setCountryOptions] = useState<SelectOption[]>([]);
   const [communityOption, setCommunityOption] = useState<SelectOption[]>([]);
