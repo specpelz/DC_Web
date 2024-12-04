@@ -175,7 +175,7 @@ const AirReadingDetails = () => {
   useEffect(() => {
     const flattenedData = [item].flatMap((item:any) => {
       // Flatten airReading
-      const airReadingsFlattened = item.airReading.map((air:any) => ({
+      const airReadingsFlattened = item.airReading?.map((air:any) => ({
         deviceId: item.id,
         deviceUid: item.device_uid,
         serialNumber: item.serial_number,
@@ -199,7 +199,7 @@ const AirReadingDetails = () => {
       }));
   
       // Flatten histories
-      const historiesFlattened = item.histories.map((history:any) => ({
+      const historiesFlattened = item.histories?.map((history:any) => ({
         deviceId: item.id,
         deviceUid: item.device_uid,
         serialNumber: item.serial_number,
@@ -396,7 +396,7 @@ const AirReadingDetails = () => {
                 />
               </div>
               <div className="grid grid-cols-2 gap-[10px] w-full md:w-[30%] md:flex md:flex-col md:justify-between">
-                {colorRange.map((item, index) => (
+                {colorRange?.map((item, index) => (
                   <div
                     key={index.toString()}
                     className="md:flex gap-x-[16px] items-center mb-[12.5px] "
@@ -418,7 +418,7 @@ const AirReadingDetails = () => {
             </div>
             <div className="xl:w-[50%]">
               <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[20px]">
-                {pm.map((item, index) => (
+                {pm?.map((item, index) => (
                   <div
                     key={index.toString()}
                     className=" bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px]"
@@ -451,7 +451,7 @@ const AirReadingDetails = () => {
                     </div>
                   </div>
                 </div>
-                {atmos.map((item, index) => (
+                {atmos?.map((item, index) => (
                   <div
                     key={index.toString()}
                     className=" bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px]"
@@ -518,8 +518,8 @@ const AirReadingDetails = () => {
                </div>
                <ResponsiveContainer width="100%" height={350}>
   <ComposedChart 
-    // data={filteredHistories.map(h => ({
-    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((h:any) => ({
+    // data={filteredHistories?.map(h => ({
+    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0)?.map((h:any) => ({
       name: moment(h.date).format('DD MMM'),
       lineValue: h.aqi,
       barValue: h.aqi
@@ -562,8 +562,8 @@ const AirReadingDetails = () => {
               </div>
               <ResponsiveContainer width="100%" height={350}>
   <ComposedChart 
-    // data={filteredHistories.map(h => ({
-    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((h:any) => ({
+    // data={filteredHistories?.map(h => ({
+    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0)?.map((h:any) => ({
       name: moment(h.date).format('DD MMM'),
       lineValue: h.pm1_0,
       barValue: h.pm1_0
@@ -606,8 +606,8 @@ const AirReadingDetails = () => {
               </div>
               <ResponsiveContainer width="100%" height={350}>
   <ComposedChart 
-    // data={filteredHistories.map(h => ({
-    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((h:any) => ({
+    // data={filteredHistories?.map(h => ({
+    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0)?.map((h:any) => ({
       name: moment(h.date).format('DD MMM'),
       lineValue: h.pm2_5,
       barValue: h.pm2_5
@@ -650,8 +650,8 @@ const AirReadingDetails = () => {
               </div>
               <ResponsiveContainer width="100%" height={350}>
   <ComposedChart 
-    // data={filteredHistories.map(h => ({
-    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((h:any) => ({
+    // data={filteredHistories?.map(h => ({
+    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0)?.map((h:any) => ({
       name: moment(h.date).format('DD MMM'),
       lineValue: h.pm10_0,
       barValue: h.pm10_0
@@ -703,7 +703,7 @@ const AirReadingDetails = () => {
               </div>
               <ResponsiveContainer width="100%" height={350}>
   <ComposedChart
-    data={item.histories.slice(0, dateRange === "Last 7 days"? 7 : dateRange === "Last 14 days"? 14 : dateRange === "Last 1 month" ? 30 : dateRange === "2 months ago" ? 60 : 0).map((h:any) => ({
+    data={item.histories.slice(0, dateRange === "Last 7 days"? 7 : dateRange === "Last 14 days"? 14 : dateRange === "Last 1 month" ? 30 : dateRange === "2 months ago" ? 60 : 0)?.map((h:any) => ({
       name: moment(h.date).format('DD MMM'),
       pm10: h.pm10_0,
       pm1: h.pm1_0,
@@ -749,7 +749,7 @@ const AirReadingDetails = () => {
               Air Quality Index Average ({dateRange})
             </div>
             <div className="w-full flex gap-[16px] items-center overflow-x-auto">
-              {tab_text.map((item, index) => (
+              {tab_text?.map((item, index) => (
                 <div
                   onClick={() => set_tab_value(item.text2)}
                   key={index.toString()}
@@ -766,7 +766,7 @@ const AirReadingDetails = () => {
           </div>
           {tab_value === "aq" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
-              {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((item:any, index:number) => (
+              {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0)?.map((item:any, index:number) => (
                 <div className="flex flex-col items-center">
                   <div
                     key={index.toString()}
@@ -806,7 +806,7 @@ const AirReadingDetails = () => {
           )}
           {tab_value === "pm1" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
-              {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((item:any, index:number) => (
+              {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0)?.map((item:any, index:number) => (
                 <div className="flex flex-col items-center">
                   <div
                     key={index.toString()}
@@ -831,7 +831,7 @@ const AirReadingDetails = () => {
           )}
           {tab_value === "pm2.5" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
-            {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((item:any, index:number) => (
+            {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0)?.map((item:any, index:number) => (
               <div className="flex flex-col items-center">
                 <div
                   key={index.toString()}
@@ -856,7 +856,7 @@ const AirReadingDetails = () => {
           )}
           {tab_value === "pm10" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
-            {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((item:any, index:number) => (
+            {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0)?.map((item:any, index:number) => (
               <div className="flex flex-col items-center">
                 <div
                   key={index.toString()}

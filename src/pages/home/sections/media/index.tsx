@@ -68,11 +68,11 @@ const MediaAwareness = () => {
                   Visit Site
                 </PrimaryBtn>
               </Link>
-              <Link to="#">
+              {/* <Link to="#">
                 <PrimaryBtn className="text-brandWhite bg-brandDark  h-[38px] lg:h-[48px] flex justify-center items-center">
                   See MAJI Campaigns
                 </PrimaryBtn>
-              </Link>
+              </Link> */}
             </div>
           )}
         </div>
