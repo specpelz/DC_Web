@@ -32,7 +32,7 @@ const AQ_Card = ({ item, clickFN }: props) => {
       onClick={() => clickFN(item)}
     >
    
-  <div className="w-[20%]">
+  <div className="w-[20%] flex-shrink-0">
   <img
           src="/pin_location.svg"
           alt="uploaded image"
