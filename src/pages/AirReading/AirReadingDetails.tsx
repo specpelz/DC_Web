@@ -4,13 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { Button, Divider } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GaugeComponent } from "react-gauge-component";
 import Select from "@components/select/Select";
 import { MdClose } from "react-icons/md";
 import {
   ComposedChart,
-  Bar,
   Line,
   Area,
   XAxis,
@@ -18,52 +17,24 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
-  Rectangle,
+  ResponsiveContainer
 } from "recharts";
 import moment from "moment";
 import GraphIndicator from "@components/GraphIndicator";
-import MapHighlights from "@pages/home/sections/map";
+import MapHighlights from "./map";
+import { CSVLink } from "react-csv";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { FlattenedDataType } from "../../types/airMonitoring";
 // import { FlattenedDataType } from "../../types/airMonitoring";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CustomBar = (props: any) => {
-  const { x, y, width, height, fill } = props;
-  return <Rectangle x={x} y={y} width={width} height={height} fill={fill} />;
-};
+// const CustomBar = (props: any) => {
+//   const { x, y, width, height, fill } = props;
+//   return <Rectangle x={x} y={y} width={width} height={height} fill={fill} />;
+// };
 
 const AirReadingDetails = () => {
-  // Sample data with 42 data points for the line graph
-  const data = [
-    { name: "Point 1", lineValue: 50, barValue: 100, barWidth: 20 },
-    { name: "Point 2", lineValue: 80 },
-    { name: "Point 3", lineValue: 60, barValue: 100, barWidth: 60 },
-    { name: "Point 4", lineValue: 90 },
-    { name: "Point 5", lineValue: 70, barValue: 100, barWidth: 25 },
-    { name: "Point 6", lineValue: 100 },
-    { name: "Point 7", lineValue: 85 },
-    { name: "Point 8", lineValue: 60, barValue: 100, barWidth: 35 },
-    { name: "Point 9", lineValue: 40 },
-    { name: "Point 10", lineValue: 70, barValue: 100, barWidth: 100 },
-    { name: "Point 11", lineValue: 55 },
-    { name: "Point 12", lineValue: 95 },
-  ];
-
-  const data2 = [
-    { name: "Point 1", lineValue1: 10, lineValue2: 30, lineValue3: 50 },
-    { name: "Point 2", lineValue1: 20, lineValue2: 20, lineValue3: 40 },
-    { name: "Point 3", lineValue1: 10, lineValue2: 25, lineValue3: 30 },
-    { name: "Point 4", lineValue1: 30, lineValue2: 15, lineValue3: 50 },
-    { name: "Point 5", lineValue1: 15, lineValue2: 35, lineValue3: 20 },
-    { name: "Point 6", lineValue1: 25, lineValue2: 10, lineValue3: 40 },
-    { name: "Point 7", lineValue1: 10, lineValue2: 20, lineValue3: 30 },
-    { name: "Point 8", lineValue1: 35, lineValue2: 5, lineValue3: 55 },
-    { name: "Point 9", lineValue1: 20, lineValue2: 30, lineValue3: 10 },
-    { name: "Point 10", lineValue1: 5, lineValue2: 25, lineValue3: 35 },
-    { name: "Point 11", lineValue1: 30, lineValue2: 15, lineValue3: 45 },
-    { name: "Point 12", lineValue1: 15, lineValue2: 40, lineValue3: 20 },
-  ];
+  
 
   const location = useLocation();
   const { item } = location.state || {};
@@ -140,199 +111,7 @@ const AirReadingDetails = () => {
     { text: <div>PM&nbsp;10</div>, text2: "pm10" },
   ];
 
-  const aqr_days = [
-    {
-      value: item.histories.length > 0 ? item.histories[0].aqi: "No data",
-      day:item.histories.length > 0 ? moment(item.histories[0].date).format("dddd"):"",
-      date: item.histories.length > 0 ? moment(item.histories[0].date).format("DD"):"",
-      month: item.histories.length > 0 ? moment(item.histories[0].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 1 ? item.histories[1].aqi: "No data",
-      day: item.histories.length > 1 ? moment(item.histories[1].date).format("dddd"):"",
-      date: item.histories.length > 1 ? moment(item.histories[1].date).format("DD"):"",
-      month: item.histories.length > 1 ? moment(item.histories[1].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 2 ? item.histories[2].aqi: "No data",
-      day: item.histories.length > 2 ? moment(item.histories[2].date).format("dddd"):"",
-      date:item.histories.length > 2 ? moment(item.histories[2].date).format("DD"):"",
-      month: item.histories.length > 2 ? moment(item.histories[2].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 3 ? item.histories[3].aqi: "No data",
-      day: item.histories.length > 3 ? moment(item.histories[3].date).format("dddd"):"",
-      date: item.histories.length > 3 ? moment(item.histories[3].date).format("DD"):"",
-      month: item.histories.length > 3 ? moment(item.histories[3].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 4 ? item.histories[4].aqi: "No data",
-      day:item.histories.length > 4 ? moment(item.histories[4].date).format("dddd"):"",
-      date: item.histories.length > 4 ? moment(item.histories[4].date).format("DD"):"",
-      month: item.histories.length > 4 ? moment(item.histories[4].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 5 ? item.histories[5].aqi: "No data",
-      day: item.histories.length > 5 ? moment(item.histories[5].date).format("dddd"):"",
-      date: item.histories.length > 5 ? moment(item.histories[5].date).format("DD"):"",
-      month:item.histories.length > 5 ? moment(item.histories[5].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 6 ? item.histories[6].aqi: "No data",
-      day: item.histories.length > 6 ? moment(item.histories[6].date).format("dddd"):"",
-      date: item.histories.length > 6 ? moment(item.histories[6].date).format("DD"):"",
-      month: item.histories.length > 6 ? moment(item.histories[6].date).format("MMMM"):"",
-    },
  
-  ];
-
-  const pm1 =[
-    {
-      value: item.histories.length > 0 ? item.histories[0].pm1_0: "No data",
-      day:item.histories.length > 0 ? moment(item.histories[0].date).format("dddd"):"",
-      date: item.histories.length > 0 ? moment(item.histories[0].date).format("DD"):"",
-      month: item.histories.length > 0 ? moment(item.histories[0].date).format("MMMM"):""
-    },
-    {
-      value: item.histories.length > 1 ? item.histories[1].pm1_0: "No data",
-      day: item.histories.length > 1 ? moment(item.histories[1].date).format("dddd"):"",
-      date: item.histories.length > 1 ? moment(item.histories[1].date).format("DD"):"",
-      month: item.histories.length > 1 ? moment(item.histories[1].date).format("MMMM"):"",
-
-    },
-    {
-      value: item.histories.length > 2 ? item.histories[2].pm1_0: "No data",
-      day: item.histories.length > 2 ? moment(item.histories[2].date).format("dddd"):"",
-      date:item.histories.length > 2 ? moment(item.histories[2].date).format("DD"):"",
-      month: item.histories.length > 2 ? moment(item.histories[2].date).format("MMMM"):"",
-
-    },
-    {
-      value: item.histories.length > 3 ? item.histories[3].pm1_0: "No data",
-      day: item.histories.length > 3 ? moment(item.histories[3].date).format("dddd"):"",
-      date: item.histories.length > 3 ? moment(item.histories[3].date).format("DD"):"",
-      month: item.histories.length > 3 ? moment(item.histories[3].date).format("MMMM"):"",
-
-    },
-    {
-      value: item.histories.length > 4 ? item.histories[4].pm1_0: "No data",
-      day:item.histories.length > 4 ? moment(item.histories[4].date).format("dddd"):"",
-      date: item.histories.length > 4 ? moment(item.histories[4].date).format("DD"):"",
-      month: item.histories.length > 4 ? moment(item.histories[4].date).format("MMMM"):"",
-
-    },
-    {
-      value: item.histories.length > 5 ? item.histories[5].pm1_0: "No data",
-      day: item.histories.length > 5 ? moment(item.histories[5].date).format("dddd"):"",
-      date: item.histories.length > 5 ? moment(item.histories[5].date).format("DD"):"",
-      month:item.histories.length > 5 ? moment(item.histories[5].date).format("MMMM"):"",
-
-    },
-    {
-      value: item.histories.length > 6 ? item.histories[6].pm1_0: "No data",
-      day: item.histories.length > 6 ? moment(item.histories[6].date).format("dddd"):"",
-      date: item.histories.length > 6 ? moment(item.histories[6].date).format("DD"):"",
-      month: item.histories.length > 6 ? moment(item.histories[6].date).format("MMMM"):"",
-
-    },
- 
-  ];
-
-
-  const pm25 =[
-    {
-      value: item.histories.length > 0 ? item.histories[0].pm2_5: "No data",
-      day:item.histories.length > 0 ? moment(item.histories[0].date).format("dddd"):"",
-      date: item.histories.length > 0 ? moment(item.histories[0].date).format("DD"):"",
-      month: item.histories.length > 0 ? moment(item.histories[0].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 1 ? item.histories[1].pm2_5: "No data",
-      day: item.histories.length > 1 ? moment(item.histories[1].date).format("dddd"):"",
-      date: item.histories.length > 1 ? moment(item.histories[1].date).format("DD"):"",
-      month: item.histories.length > 1 ? moment(item.histories[1].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 2 ? item.histories[2].pm2_5: "No data",
-      day: item.histories.length > 2 ? moment(item.histories[2].date).format("dddd"):"",
-      date:item.histories.length > 2 ? moment(item.histories[2].date).format("DD"):"",
-      month: item.histories.length > 2 ? moment(item.histories[2].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 3 ? item.histories[3].pm2_5: "No data",
-      day: item.histories.length > 3 ? moment(item.histories[3].date).format("dddd"):"",
-      date: item.histories.length > 3 ? moment(item.histories[3].date).format("DD"):"",
-      month: item.histories.length > 3 ? moment(item.histories[3].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 4 ? item.histories[4].pm2_5: "No data",
-      day:item.histories.length > 4 ? moment(item.histories[4].date).format("dddd"):"",
-      date: item.histories.length > 4 ? moment(item.histories[4].date).format("DD"):"",
-      month: item.histories.length > 4 ? moment(item.histories[4].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 5 ? item.histories[5].pm2_5: "No data",
-      day: item.histories.length > 5 ? moment(item.histories[5].date).format("dddd"):"",
-      date: item.histories.length > 5 ? moment(item.histories[5].date).format("DD"):"",
-      month:item.histories.length > 5 ? moment(item.histories[5].date).format("MMMM"):"",
-
-    },
-    {
-      value: item.histories.length > 6 ? item.histories[6].pm2_5: "No data",
-      day: item.histories.length > 6 ? moment(item.histories[6].date).format("dddd"):"",
-      date: item.histories.length > 6 ? moment(item.histories[6].date).format("DD"):"",
-      month: item.histories.length > 6 ? moment(item.histories[6].date).format("MMMM"):"",
-
-    },
- 
-  ];
-
-  const pm10 =[
-    {
-      value: item.histories.length > 0 ? item.histories[0].pm10_0: "No data",
-      day:item.histories.length > 0 ? moment(item.histories[0].date).format("dddd"):"",
-      date: item.histories.length > 0 ? moment(item.histories[0].date).format("DD"):"",
-      month: item.histories.length > 0 ? moment(item.histories[0].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 1 ? item.histories[1].pm10_0: "No data",
-      day: item.histories.length > 1 ? moment(item.histories[1].date).format("dddd"):"",
-      date: item.histories.length > 1 ? moment(item.histories[1].date).format("DD"):"",
-      month: item.histories.length > 1 ? moment(item.histories[1].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 2 ? item.histories[2].pm10_0: "No data",
-      day: item.histories.length > 2 ? moment(item.histories[2].date).format("dddd"):"",
-      date:item.histories.length > 2 ? moment(item.histories[2].date).format("DD"):"",
-      month: item.histories.length > 2 ? moment(item.histories[2].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 3 ? item.histories[3].pm10_0: "No data",
-      day: item.histories.length > 3 ? moment(item.histories[3].date).format("dddd"):"",
-      date: item.histories.length > 3 ? moment(item.histories[3].date).format("DD"):"",
-      month: item.histories.length > 3 ? moment(item.histories[3].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 4 ? item.histories[4].pm10_0: "No data",
-      day:item.histories.length > 4 ? moment(item.histories[4].date).format("dddd"):"",
-      date: item.histories.length > 4 ? moment(item.histories[4].date).format("DD"):"",
-      month: item.histories.length > 4 ? moment(item.histories[4].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 5 ? item.histories[5].pm10_0: "No data",
-      day: item.histories.length > 5 ? moment(item.histories[5].date).format("dddd"):"",
-      date: item.histories.length > 5 ? moment(item.histories[5].date).format("DD"):"",
-      month:item.histories.length > 5 ? moment(item.histories[5].date).format("MMMM"):"",
-    },
-    {
-      value: item.histories.length > 6 ? item.histories[6].pm10_0: "No data",
-      day: item.histories.length > 6 ? moment(item.histories[6].date).format("dddd"):"",
-      date: item.histories.length > 6 ? moment(item.histories[6].date).format("DD"):"",
-      month: item.histories.length > 6 ? moment(item.histories[6].date).format("MMMM"):"",
-    },
- 
-  ];
-
   const getAQRGrade = (aqrValue: string) => {
     let text = "";
 
@@ -386,76 +165,68 @@ const AirReadingDetails = () => {
 
 
 
-  // const [csvItems, setCsvItems] = useState<FlattenedDataType[]>([]);
+  const [csvItems, setCsvItems] = useState<FlattenedDataType[]>([]);
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-  // useEffect(() => {
-  //   const flattenedData = item.flatMap((item:any) => {
-  //     // Flatten airReading
-  //     const airReadingsFlattened = item.airReading.map((air:any) => ({
-  //       deviceId: item.id,
-  //       deviceUid: item.device_uid,
-  //       serialNumber: item.serial_number,
-  //       location: item.location,
-  //       latitude: item.lat,
-  //       longitude: item.lon,
-  //       createdAt: item.createdAt,
-  //       updatedAt: item.updatedAt,
-  //       readingType: "Air Reading",
-  //       readingId: air.id,
-  //       aqi: Number(air.aqi), // Ensure number type
-  //       humidity: Number(air.humidity), // Ensure number type
-  //       pm01_0: Number(air.pm01_0), // Ensure number type
-  //       pm02_5: Number(air.pm02_5), // Ensure number type
-  //       pm10_0: Number(air.pm10_0), // Ensure number type
-  //       pressure: Number(air.pressure), // Ensure number type
-  //       temperature: Number(air.temperature), // Ensure number type
-  //       voltage: Number(air.voltage), // Ensure number type
-  //       captured: Number(air.captured), // Ensure number type
-  //       readingCreatedAt: air.createdAt,
-  //     }));
+  useEffect(() => {
+    const flattenedData = [item].flatMap((item:any) => {
+      // Flatten airReading
+      const airReadingsFlattened = item.airReading.map((air:any) => ({
+        deviceId: item.id,
+        deviceUid: item.device_uid,
+        serialNumber: item.serial_number,
+        location: item.location,
+        latitude: item.lat,
+        longitude: item.lon,
+        createdAt: moment(item.createdAt).format("YYYY-MM-DD"),
+        updatedAt: moment(item.updatedAt).format("YYYY-MM-DD"),
+        readingType: "Air Reading",
+        readingId: air.id,
+        aqi: Number(air.aqi), // Ensure number type
+        humidity: Number(air.humidity), // Ensure number type
+        pm01_0: Number(air.pm01_0), // Ensure number type
+        pm02_5: Number(air.pm02_5), // Ensure number type
+        pm10_0: Number(air.pm10_0), // Ensure number type
+        pressure: Number(air.pressure), // Ensure number type
+        temperature: Number(air.temperature), // Ensure number type
+        voltage: Number(air.voltage), // Ensure number type
+        captured: Number(air.captured), // Ensure number type
+        readingCreatedAt: moment(air.createdAt).format("YYYY-MM-DD"),
+      }));
   
-  //     // Flatten histories
-  //     const historiesFlattened = item.histories.map((history:any) => ({
-  //       deviceId: item.id,
-  //       deviceUid: item.device_uid,
-  //       serialNumber: item.serial_number,
-  //       location: item.location,
-  //       latitude: item.lat,
-  //       longitude: item.lon,
-  //       createdAt: item.createdAt,
-  //       updatedAt: item.updatedAt,
-  //       readingType: "History",
-  //       readingId: history.id,
-  //       aqi: Number(history.aqi), // Ensure number type
-  //       humidity: null, // Histories don't have humidity
-  //       pm01_0: Number(history.pm1_0), // Ensure number type
-  //       pm02_5: Number(history.pm2_5), // Ensure number type
-  //       pm10_0: Number(history.pm10_0), // Ensure number type
-  //       pressure: null, // Histories don't have pressure
-  //       temperature: null, // Histories don't have temperature
-  //       voltage: null, // Histories don't have voltage
-  //       captured: null, // Histories don't have captured
-  //       readingCreatedAt: history.date,
-  //     }));
+      // Flatten histories
+      const historiesFlattened = item.histories.map((history:any) => ({
+        deviceId: item.id,
+        deviceUid: item.device_uid,
+        serialNumber: item.serial_number,
+        location: item.location,
+        latitude: item.lat,
+        longitude: item.lon,
+        createdAt: moment(item.createdAt).format("YYYY-MM-DD"),
+        updatedAt: moment(item.updatedAt).format("YYYY-MM-DD"),
+        readingType: "History",
+        readingId: history.id,
+        aqi: Number(history.aqi), // Ensure number type
+        humidity: null, // Histories don't have humidity
+        pm01_0: Number(history.pm1_0), // Ensure number type
+        pm02_5: Number(history.pm2_5), // Ensure number type
+        pm10_0: Number(history.pm10_0), // Ensure number type
+        pressure: null, // Histories don't have pressure
+        temperature: null, // Histories don't have temperature
+        voltage: null, // Histories don't have voltage
+        captured: null, // Histories don't have captured
+        readingCreatedAt: moment(history.date).format("YYYY-MM-DD"),
+      }));
   
-  //     // Combine airReadings and histories
-  //     return [...airReadingsFlattened, ...historiesFlattened];
-  //   });
-  //   setCsvItems(flattenedData);
-  // }, [item]);
+      // Combine airReadings and histories
+      return [...airReadingsFlattened, ...historiesFlattened];
+    });
+    setCsvItems(flattenedData);
+  }, [item]);
 
 
 
@@ -463,28 +234,28 @@ const AirReadingDetails = () => {
 
 
   // Define headers for CSV
-  // const headers = [
-  //   { label: "Device ID", key: "deviceId" },
-  //   { label: "Device UID", key: "deviceUid" },
-  //   { label: "Serial Number", key: "serialNumber" },
-  //   { label: "Location", key: "location" },
-  //   { label: "Latitude", key: "latitude" },
-  //   { label: "Longitude", key: "longitude" },
-  //   { label: "Device Created At", key: "createdAt" },
-  //   { label: "Device Updated At", key: "updatedAt" },
-  //   { label: "Reading Type", key: "readingType" },
-  //   { label: "Reading ID", key: "readingId" },
-  //   { label: "AQI", key: "aqi" },
-  //   { label: "Humidity", key: "humidity" },
-  //   { label: "PM01.0", key: "pm01_0" },
-  //   { label: "PM02.5", key: "pm02_5" },
-  //   { label: "PM10.0", key: "pm10_0" },
-  //   { label: "Pressure", key: "pressure" },
-  //   { label: "Temperature", key: "temperature" },
-  //   { label: "Voltage", key: "voltage" },
-  //   { label: "Captured", key: "captured" },
-  //   { label: "Reading Created At", key: "readingCreatedAt" },
-  // ];
+  const headers = [
+    { label: "Device ID", key: "deviceId" },
+    { label: "Device UID", key: "deviceUid" },
+    { label: "Serial Number", key: "serialNumber" },
+    { label: "Location", key: "location" },
+    { label: "Latitude", key: "latitude" },
+    { label: "Longitude", key: "longitude" },
+    { label: "Device Created At", key: "createdAt" },
+    { label: "Device Updated At", key: "updatedAt" },
+    { label: "Reading Type", key: "readingType" },
+    { label: "Reading ID", key: "readingId" },
+    { label: "AQI", key: "aqi" },
+    { label: "Humidity", key: "humidity" },
+    { label: "PM01.0", key: "pm01_0" },
+    { label: "PM02.5", key: "pm02_5" },
+    { label: "PM10.0", key: "pm10_0" },
+    { label: "Pressure", key: "pressure" },
+    { label: "Temperature", key: "temperature" },
+    { label: "Voltage", key: "voltage" },
+    { label: "Captured", key: "captured" },
+    { label: "Reading Created At", key: "readingCreatedAt" },
+  ];
 
 
 
@@ -494,7 +265,7 @@ const AirReadingDetails = () => {
 
 
 
-
+  const [dateRange, setDaysRange]=useState<string | number>("Last 7 days")
 
 
 
@@ -520,7 +291,16 @@ const AirReadingDetails = () => {
               />
             }
           >
-            Download
+                       <CSVLink
+                filename={"Air_monitoring_data.csv"}
+           
+                data={csvItems}
+                headers={headers}
+        
+                className="btn btn-primary"
+              >
+                <div className="text-[16px] font-[400]">Download</div>
+              </CSVLink>
           </Button>
         </div>
 
@@ -695,7 +475,12 @@ const AirReadingDetails = () => {
 
           <div className="my-[40px]">
             <div className="font-[700] text-[24px] mb-[-20px]">Map</div>
-            <MapHighlights />
+            <MapHighlights 
+              id= {item.id}
+              lat= {item.lat}
+              lon= {item.lon}
+              location= {item.location}
+            />
           </div>
         </div>
  
@@ -705,221 +490,199 @@ const AirReadingDetails = () => {
             <Select
               name="timeline"
               label=""
-              placeholder="Select the country"
+              
               required={false}
-              requiredMessage="Please select the country!"
+          
               options={time_line} // Ensure countries is an array of { value, label }
-              showSearch={true}
+       
               defaultValue="Last 7 days"
+              onChange={(e)=>{
+                  setDaysRange(e)
+              }}
               // styleClass="bg-[#E6E6E6]"
             />
           </div>
 
           <div className="xl:grid xl:grid-cols-2 xl:gap-[20px]">
+          <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
+             
+             <div className="text-[14px] mb-[20px]">Air Quality Index</div>
+               <div className="mb-[20px] flex items-center justify-center gap-x-[10px]">
+               <GraphIndicator
+               color="#DC82E899"
+               text="AQI"
+               />
+           
+             
+           
+               </div>
+               <ResponsiveContainer width="100%" height={350}>
+  <ComposedChart 
+    // data={filteredHistories.map(h => ({
+    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((h:any) => ({
+      name: moment(h.date).format('DD MMM'),
+      lineValue: h.aqi,
+      barValue: h.aqi
+    }))} 
+    margin={{ left: -30 }}
+  >
+    <CartesianGrid stroke="#f5f5f5" />
+    <XAxis dataKey="name" />
+    <YAxis domain={[0, 500]} label={{ value: 'AQI', angle: -90, position: 'insideLeft' }} />
+    <Tooltip />
+    <Legend />
+
+    <Area
+      type="linear"
+      dataKey="lineValue"
+      stroke="none"
+      fill="#DC82E899"
+    />
+
+    <Line
+      type="linear"
+      dataKey="lineValue"
+      stroke="#DC82E899"
+      strokeWidth={2}
+    />
+  </ComposedChart>
+</ResponsiveContainer>
+             </div>
             <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
-              <div className="text-[14px] mb-[20px]">Battery Voltage(V) with Charging Indicator</div>
+              <div className="text-[14px] mb-[20px]">PM 1</div>
               <div className="mb-[20px] flex items-center justify-center gap-x-[10px]">
               <GraphIndicator
               color="#B3CF9B"
-              text="Voltage (V)"
+              text="PM1"
               />
-              <GraphIndicator
+              {/* <GraphIndicator
               color="#FFECB4"
               text="Charging"
-              />
+              /> */}
               </div>
               <ResponsiveContainer width="100%" height={350}>
-             
-                <ComposedChart data={data} margin={{ left: -30 }}>
-                  <CartesianGrid stroke="#f5f5f5" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
+  <ComposedChart 
+    // data={filteredHistories.map(h => ({
+    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((h:any) => ({
+      name: moment(h.date).format('DD MMM'),
+      lineValue: h.pm1_0,
+      barValue: h.pm1_0
+    }))} 
+    margin={{ left: -30 }}
+  >
+    <CartesianGrid stroke="#f5f5f5" />
+    <XAxis dataKey="name" />
+    <YAxis domain={[0, 500]} label={{ value: 'PM1', angle: -90, position: 'insideLeft' }} />
+    <Tooltip />
+    <Legend />
 
-                  {/* Render bars with a custom shape for variable widths */}
-                  <Bar
-                    dataKey="barValue"
-                    fill="#fce9b2"
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    shape={(props: any) => {
-                      const { index } = props; // Access the current index
-                      const barWidth = data[index]?.barWidth || 20; // Get the custom width or use a default value
-                      return <CustomBar {...props} width={barWidth} />;
-                    }}
-                    opacity={0.6}
-                  />
+    <Area
+      type="linear"
+      dataKey="lineValue"
+      stroke="none"
+      fill="#B3CF9B"
+    />
 
-                  {/* Transparent Net Effect under the Line */}
-                  <Area
-                    type="linear"
-                    dataKey="lineValue"
-                    stroke="none"
-                    fill="#dfebd6" // Transparent orange net-like effect
-                  />
-
-                  {/* Line Graph: In Front of Bars */}
-                  <Line
-                    type="linear"
-                    dataKey="lineValue"
-                    stroke="#b1cd99"
-                    strokeWidth={2}
-                  />
-                </ComposedChart>
-              </ResponsiveContainer>
+    <Line
+      type="linear"
+      dataKey="lineValue"
+      stroke="#b1cd99"
+      strokeWidth={2}
+    />
+  </ComposedChart>
+</ResponsiveContainer>
             </div>
             <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
-          <div className="flex items-center justify-between mb-[20px]">
-          <div className="text-[14px] ">Temperature</div>
-          <div className="text-[14px] "> <Button size="large">Change to F</Button></div>
-          </div>
+              <div className="text-[14px] mb-[20px]">PM 2.5</div>
               <div className="mb-[20px] flex items-center justify-center gap-x-[10px]">
               <GraphIndicator
-              color="#C2EEFE"
-              text="Temperature (°C)"
+              color="#73ACC1"
+              text="PM2.5"
               />
-              <GraphIndicator
+              {/* <GraphIndicator
               color="#FFECB4"
-              text="Temperaure (F)"
-              />
+              text="Charging"
+              /> */}
               </div>
-             
               <ResponsiveContainer width="100%" height={350}>
-                <ComposedChart data={data} margin={{ left: -30 }}>
-                  <CartesianGrid stroke="#f5f5f5" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
+  <ComposedChart 
+    // data={filteredHistories.map(h => ({
+    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((h:any) => ({
+      name: moment(h.date).format('DD MMM'),
+      lineValue: h.pm2_5,
+      barValue: h.pm2_5
+    }))} 
+    margin={{ left: -30 }}
+  >
+    <CartesianGrid stroke="#f5f5f5" />
+    <XAxis dataKey="name" />
+    <YAxis domain={[0, 500]} label={{ value: 'PM1', angle: -90, position: 'insideLeft' }} />
+    <Tooltip />
+    <Legend />
 
-                  {/* Render bars with a custom shape for variable widths */}
-                  {/* <Bar
-                    dataKey="barValue"
-                    fill="#fce9b2"
-                    shape={(props: any) => {
-                      const { index } = props; // Access the current index
-                      const barWidth = data[index]?.barWidth || 20; // Get the custom width or use a default value
-                      return <CustomBar {...props} width={barWidth} />;
-                    }}
-                    opacity={0.6}
-                  /> */}
+    <Area
+      type="linear"
+      dataKey="lineValue"
+      stroke="none"
+      fill="#73ACC1"
+    />
 
-                  {/* Transparent Net Effect under the Line */}
-                  <Area
-                    type="linear"
-                    dataKey="lineValue"
-                    stroke="none"
-                    fill="#dfebd6" // Transparent orange net-like effect
-                  />
-
-                  {/* Line Graph: In Front of Bars */}
-                  <Line
-                    type="linear"
-                    dataKey="lineValue"
-                    stroke="#b1cd99"
-                    strokeWidth={2}
-                  />
-                </ComposedChart>
-              </ResponsiveContainer>
+    <Line
+      type="linear"
+      dataKey="lineValue"
+      stroke="#73ACC1"
+      strokeWidth={2}
+    />
+  </ComposedChart>
+</ResponsiveContainer>
             </div>
             <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
-             
-            <div className="text-[14px] mb-[20px]">Air Quality Index</div>
+              <div className="text-[14px] mb-[20px]">PM 10</div>
               <div className="mb-[20px] flex items-center justify-center gap-x-[10px]">
               <GraphIndicator
-              color="#DC82E899"
-              text="AQI"
+              color="#F9B8B0"
+              text="PM10"
               />
-          
-            
-          
+              {/* <GraphIndicator
+              color="#FFECB4"
+              text="Charging"
+              /> */}
               </div>
               <ResponsiveContainer width="100%" height={350}>
-                <ComposedChart data={data} margin={{ left: -30 }}>
-                  <CartesianGrid stroke="#f5f5f5" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
+  <ComposedChart 
+    // data={filteredHistories.map(h => ({
+    data={item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((h:any) => ({
+      name: moment(h.date).format('DD MMM'),
+      lineValue: h.pm10_0,
+      barValue: h.pm10_0
+    }))} 
+    margin={{ left: -30 }}
+  >
+    <CartesianGrid stroke="#f5f5f5" />
+    <XAxis dataKey="name" />
+    <YAxis domain={[0, 500]} label={{ value: 'PM1', angle: -90, position: 'insideLeft' }} />
+    <Tooltip />
+    <Legend />
 
-                  {/* Render bars with a custom shape for variable widths */}
-                  {/* <Bar
-                    dataKey="barValue"
-                    fill="#fce9b2"
-                    shape={(props: any) => {
-                      const { index } = props; // Access the current index
-                      const barWidth = data[index]?.barWidth || 20; // Get the custom width or use a default value
-                      return <CustomBar {...props} width={barWidth} />;
-                    }}
-                    opacity={0.6}
-                  /> */}
+    <Area
+      type="linear"
+      dataKey="lineValue"
+      stroke="none"
+      fill="#F9B8B0"
+    />
 
-                  {/* Transparent Net Effect under the Line */}
-                  <Area
-                    type="linear"
-                    dataKey="lineValue"
-                    stroke="none"
-                    fill="#dfebd6" // Transparent orange net-like effect
-                  />
-
-                  {/* Line Graph: In Front of Bars */}
-                  <Line
-                    type="linear"
-                    dataKey="lineValue"
-                    stroke="#b1cd99"
-                    strokeWidth={2}
-                  />
-                </ComposedChart>
-              </ResponsiveContainer>
+    <Line
+      type="linear"
+      dataKey="lineValue"
+      stroke="#F9B8B0"
+      strokeWidth={2}
+    />
+  </ComposedChart>
+</ResponsiveContainer>
             </div>
-            <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
-             
-            <div className="text-[14px] mb-[20px]">Humidity</div>
-              <div className="mb-[20px] flex items-center justify-center gap-x-[10px]">
-              <GraphIndicator
-              color="#DC82E899"
-              text="Humidity (%)"
-              />
+      
           
-              </div>
-              <ResponsiveContainer width="100%" height={350}>
-                <ComposedChart data={data} margin={{ left: -30 }}>
-                  <CartesianGrid stroke="#f5f5f5" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
 
-                  {/* Render bars with a custom shape for variable widths */}
-                  {/* <Bar
-                    dataKey="barValue"
-                    fill="#fce9b2"
-                    shape={(props: any) => {
-                      const { index } = props; // Access the current index
-                      const barWidth = data[index]?.barWidth || 20; // Get the custom width or use a default value
-                      return <CustomBar {...props} width={barWidth} />;
-                    }}
-                    opacity={0.6}
-                  /> */}
-
-                  {/* Transparent Net Effect under the Line */}
-                  <Area
-                    type="linear"
-                    dataKey="lineValue"
-                    stroke="none"
-                    fill="#dfebd6" // Transparent orange net-like effect
-                  />
-
-                  {/* Line Graph: In Front of Bars */}
-                  <Line
-                    type="linear"
-                    dataKey="lineValue"
-                    stroke="#b1cd99"
-                    strokeWidth={2}
-                  />
-                </ComposedChart>
-              </ResponsiveContainer>
-            </div>
           </div>
           <div className="mt-[20px]">
             <div className="mb-[20px] xl:mb-[unset] w-full  bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] px-[24px] py-[28px] text-[14px] h-[500px]">
@@ -939,45 +702,51 @@ const AirReadingDetails = () => {
               />
               </div>
               <ResponsiveContainer width="100%" height={350}>
-                <ComposedChart data={data2} margin={{ left: -30 }}>
-                  <CartesianGrid stroke="#f5f5f5" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
+  <ComposedChart
+    data={item.histories.slice(0, dateRange === "Last 7 days"? 7 : dateRange === "Last 14 days"? 14 : dateRange === "Last 1 month" ? 30 : dateRange === "2 months ago" ? 60 : 0).map((h:any) => ({
+      name: moment(h.date).format('DD MMM'),
+      pm10: h.pm10_0,
+      pm1: h.pm1_0,
+      pm25: h.pm2_5
+    }))}
+    margin={{ left: -30 }}
+  >
+    <CartesianGrid stroke="#f5f5f5" />
+    <XAxis dataKey="name" />
+    <YAxis domain={[0, 500]} label={{ value: 'Particulate Matter (μg/m³)', angle: -90, position: 'insideLeft' }} />
+    <Tooltip />
+    <Legend />
 
-                  {/* First Line */}
-                  <Line
-                    type="linear"
-                    dataKey="lineValue1"
-                    stroke="#b1cd99"
-                    strokeWidth={2}
-                  />
-
-                  {/* Second Line */}
-                  <Line
-                    type="linear"
-                    dataKey="lineValue2"
-                    stroke="#83a1c4"
-                    strokeWidth={2}
-                  />
-
-                  {/* Third Line */}
-                  <Line
-                    type="linear"
-                    dataKey="lineValue3"
-                    stroke="#ff8563"
-                    strokeWidth={2}
-                  />
-                </ComposedChart>
-              </ResponsiveContainer>
+    <Line
+      type="linear"
+      dataKey="pm10"
+      stroke="#F9B8B0"
+      name="PM10"
+      strokeWidth={2}
+    />
+    <Line
+      type="linear"
+      dataKey="pm1"
+      stroke="#82CA9D"
+      name="PM1"
+      strokeWidth={2}
+    />
+    <Line
+      type="linear"
+      dataKey="pm25"
+      stroke="#8884D8"
+      name="PM2.5"
+      strokeWidth={2}
+    />
+  </ComposedChart>
+</ResponsiveContainer>
             </div>
           </div>
         </div>
         <div className="rounded-[20px] shadow-md w-full p-[20px] lg:p-[40px] mt-[50px]">
           <div className="xl:flex justify-between items-center gap-x-[20px]">
             <div className="text-[18px] text-[700] md:text-[24px] font-[700] mb-[20px] xl:mb-[unset]">
-              Air Quality Index Average (Last 7 Days)
+              Air Quality Index Average ({dateRange})
             </div>
             <div className="w-full flex gap-[16px] items-center overflow-x-auto">
               {tab_text.map((item, index) => (
@@ -997,34 +766,39 @@ const AirReadingDetails = () => {
           </div>
           {tab_value === "aq" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
-              {aqr_days.map((item, index) => (
+              {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((item:any, index:number) => (
                 <div className="flex flex-col items-center">
                   <div
                     key={index.toString()}
-                    className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
-                      getAQRGrade(item.value) !== "No data"
+                    className={`w-full  border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
+                      getAQRGrade(item.aqi ? item.aqi: "No data") === "Good"
                         ? "bg-[#62F42E]"
+                        :getAQRGrade(item.aqi ? item.aqi: "No data") === "Moderate" ? "bg-[#E5F434]"
+                        :getAQRGrade(item.aqi ? item.aqi: "No data") === "USG" ? "bg-[#F49C4B]"
+                        :getAQRGrade(item.aqi ? item.aqi: "No data") === "Unhealthy" ? "bg-[#F43A2E]"
+                        :getAQRGrade(item.aqi ? item.aqi: "No data") === "Very unhealthy" ? "bg-[#B430E3]"
+                        :getAQRGrade(item.aqi ? item.aqi: "No data") === "Harzadous" ? "bg-[#8B2121]"
                         : "bg-[#C2C2C2]"
                     }`}
                   >
                     <div>
                       <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
-                        {item.value}
+                        {item.aqi ? item.aqi: "No data"}
                       </div>
                       <div className="my-[-20px]">
                         <Divider />
                       </div>
                       <div className="flex justify-center items-center gap-x-[5px] text-[16px] font-[600] text-[#2C2C2C]">
-                        {getAQRGrade(item.value)}
+                        {getAQRGrade(item.aqi? item.aqi: "No data")}
                       </div>
                     </div>
                   </div>
 
                   <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">
-                    {item.day}
+                    {item.date? moment(item.date).format("dddd"): ""}
                   </div>
                   <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">
-                    {item.date}&nbsp;{item.month}
+                  {item.date? moment(item.date).format("DD"): ""}&nbsp;{item.date? moment(item.date).format("MMMM"): ""}
                   </div>
                 </div>
               ))}
@@ -1032,28 +806,24 @@ const AirReadingDetails = () => {
           )}
           {tab_value === "pm1" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
-              {pm1.map((item, index) => (
+              {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((item:any, index:number) => (
                 <div className="flex flex-col items-center">
                   <div
                     key={index.toString()}
-                    className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
-                      getAQRGrade(item.value) !== "No data"
-                        ? "bg-[#62F42E]"
-                        : "bg-[#C2C2C2]"
-                    }`}
+                    className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px]`}
                   >
                     <div>
                       <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
-                        {item.value}
+                        {item.pm1_0 ? item.pm1_0: "No data"}
                       </div>
                     </div>
                   </div>
 
                   <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">
-                    {item.day}
+                  {item.date? moment(item.date).format("dddd"): ""}
                   </div>
                   <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">
-                    {item.date}&nbsp;{item.month}
+                  {item.date? moment(item.date).format("DD"): ""}&nbsp;{item.date? moment(item.date).format("MMMM"): ""}
                   </div>
                 </div>
               ))}
@@ -1061,61 +831,53 @@ const AirReadingDetails = () => {
           )}
           {tab_value === "pm2.5" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
-              {pm25.map((item, index) => (
-                <div className="flex flex-col items-center">
-                  <div
-                    key={index.toString()}
-                    className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
-                      getAQRGrade(item.value) !== "No data"
-                        ? "bg-[#62F42E]"
-                        : "bg-[#C2C2C2]"
-                    }`}
-                  >
-                    <div>
-                      <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
-                        {item.value}
-                      </div>
+            {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((item:any, index:number) => (
+              <div className="flex flex-col items-center">
+                <div
+                  key={index.toString()}
+                  className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px]`}
+                >
+                  <div>
+                    <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
+                      {item.pm2_5 ? item.pm2_5: "No data"}
                     </div>
                   </div>
-
-                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">
-                    {item.day}
-                  </div>
-                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">
-                    {item.date}&nbsp;{item.month}
-                  </div>
                 </div>
-              ))}
-            </div>
+
+                <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">
+                {item.date? moment(item.date).format("dddd"): ""}
+                </div>
+                <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">
+                {item.date? moment(item.date).format("DD"): ""}&nbsp;{item.date? moment(item.date).format("MMMM"): ""}
+                </div>
+              </div>
+            ))}
+          </div>
           )}
           {tab_value === "pm10" && (
             <div className="grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 mt-[20px] gap-[20px]">
-              {pm10.map((item, index) => (
-                <div className="flex flex-col items-center">
-                  <div
-                    key={index.toString()}
-                    className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px] ${
-                      getAQRGrade(item.value) !== "No data"
-                        ? "bg-[#62F42E]"
-                        : "bg-[#C2C2C2]"
-                    }`}
-                  >
-                    <div>
-                      <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
-                        {item.value}
-                      </div>
+            {item.histories && item.histories.slice(0, dateRange === "Last 7 days"? 7:dateRange === "Last 14 days"? 14 :dateRange === "Last 1 month" ? 30:dateRange === "2 months ago" ? 60:0).map((item:any, index:number) => (
+              <div className="flex flex-col items-center">
+                <div
+                  key={index.toString()}
+                  className={`w-full bg-[#FDFDFD] border-[0.5px] border-[#E6E6E6] rounded-[10px] text-[14px] flex items-center justify-center h-[147.5px]`}
+                >
+                  <div>
+                    <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
+                      {item.pm10_0 ? item.pm10_0: "No data"}
                     </div>
                   </div>
-
-                  <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">
-                    {item.day}
-                  </div>
-                  <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">
-                    {item.date}&nbsp;{item.month}
-                  </div>
                 </div>
-              ))}
-            </div>
+
+                <div className="w-full text-center mb-[10px] mt-[16px] text-[16px] md:text-[18px] text-[#757575]">
+                {item.date? moment(item.date).format("dddd"): ""}
+                </div>
+                <div className="w-full text-center text-[16px] md:text-[18px] text-[#757575]">
+                {item.date? moment(item.date).format("DD"): ""}&nbsp;{item.date? moment(item.date).format("MMMM"): ""}
+                </div>
+              </div>
+            ))}
+          </div>
           )}
         </div>
         <div className="mb-[100px]">
