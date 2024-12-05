@@ -778,6 +778,7 @@ const AirReadingDetails = () => {
 
     <Area
       type="linear"
+       name="AQI"
       dataKey="lineValue"
       stroke="none"
       fill="#DC82E899"
@@ -785,6 +786,7 @@ const AirReadingDetails = () => {
 
     <Line
       type="linear"
+       name="AQI"
       dataKey="lineValue"
       stroke="#DC82E899"
       strokeWidth={2}
@@ -822,6 +824,7 @@ const AirReadingDetails = () => {
 
     <Area
       type="linear"
+       name="PM 1"
       dataKey="lineValue"
       stroke="none"
       fill="#B3CF9B"
@@ -829,6 +832,7 @@ const AirReadingDetails = () => {
 
     <Line
       type="linear"
+       name="PM 1"
       dataKey="lineValue"
       stroke="#b1cd99"
       strokeWidth={2}
@@ -866,6 +870,7 @@ const AirReadingDetails = () => {
 
     <Area
       type="linear"
+       name="PM 2.5"
       dataKey="lineValue"
       stroke="none"
       fill="#73ACC1"
@@ -873,6 +878,7 @@ const AirReadingDetails = () => {
 
     <Line
       type="linear"
+       name="PM 2.5"
       dataKey="lineValue"
       stroke="#73ACC1"
       strokeWidth={2}
@@ -910,6 +916,7 @@ const AirReadingDetails = () => {
 
     <Area
       type="linear"
+       name="PM 10"
       dataKey="lineValue"
       stroke="none"
       fill="#F9B8B0"
@@ -917,6 +924,7 @@ const AirReadingDetails = () => {
 
     <Line
       type="linear"
+      name="PM 10"
       dataKey="lineValue"
       stroke="#F9B8B0"
       strokeWidth={2}
