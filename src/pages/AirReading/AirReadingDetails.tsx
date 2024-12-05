@@ -3,7 +3,7 @@ import MainLayout from "@layouts/MainLayout";
 import { Link, useLocation } from "react-router-dom";
 
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { Button, Divider } from "antd";
+import { Button, DatePicker, Divider, Space } from "antd";
 import { useEffect, useState } from "react";
 import { GaugeComponent } from "react-gauge-component";
 import Select from "@components/select/Select";
@@ -25,13 +25,29 @@ import MapHighlights from "./map";
 import { CSVLink } from "react-csv";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FlattenedDataType } from "../../types/airMonitoring";
+import dayjs, { Dayjs } from 'dayjs';
 // import { FlattenedDataType } from "../../types/airMonitoring";
+
+const { RangePicker } = DatePicker;
+
+
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // const CustomBar = (props: any) => {
 //   const { x, y, width, height, fill } = props;
 //   return <Rectangle x={x} y={y} width={width} height={height} fill={fill} />;
 // };
+
+
+
+
+interface FilterValues {
+  dateRange: [Dayjs | null, Dayjs | null];
+  date: Dayjs | null;
+
+}
+
 
 const AirReadingDetails = () => {
   
@@ -172,9 +188,150 @@ const AirReadingDetails = () => {
 
 
 
+  const [dateRange, setDaysRange]=useState<string | number>("Last 7 days")
+  const [showFilter, setShowFilter] = useState<boolean>(false);
+
+  const handleFilterChange = (
+    date: Dayjs | [Dayjs | null, Dayjs | null] | null, 
+    field: keyof FilterValues
+  ) => {
+    setFilterValues((prev) => ({
+      ...prev,
+      [field]: date
+    }));
+  };
+
+
+  const [filterValues, setFilterValues] = useState<FilterValues>({
+    dateRange: [null, null],
+    date: null,
+
+  });
+
+
+
+
+  const clearFilter = () => {
+    setFilterValues({
+      dateRange: [null, null],
+      date: null,
+
+
+    });
+
+
+    setShowFilter(false);
+   
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // useEffect(() => {
+  //   const flattenedData = [item].flatMap((item:any) => {
+  //     // Flatten airReading
+  //     const airReadingsFlattened = item.airReading?.map((air:any) => ({
+  //       deviceId: item.id,
+  //       deviceUid: item.device_uid,
+  //       serialNumber: item.serial_number,
+  //       location: item.location,
+  //       latitude: item.lat,
+  //       longitude: item.lon,
+  //       createdAt: moment(item.createdAt).format("YYYY-MM-DD"),
+  //       updatedAt: moment(item.updatedAt).format("YYYY-MM-DD"),
+  //       readingType: "Air Reading",
+  //       readingId: air.id,
+  //       aqi: Number(air.aqi), // Ensure number type
+  //       humidity: Number(air.humidity), // Ensure number type
+  //       pm01_0: Number(air.pm01_0), // Ensure number type
+  //       pm02_5: Number(air.pm02_5), // Ensure number type
+  //       pm10_0: Number(air.pm10_0), // Ensure number type
+  //       pressure: Number(air.pressure), // Ensure number type
+  //       temperature: Number(air.temperature), // Ensure number type
+  //       voltage: Number(air.voltage), // Ensure number type
+  //       captured: Number(air.captured), // Ensure number type
+  //       readingCreatedAt: moment(air.createdAt).format("YYYY-MM-DD"),
+  //     }));
+  
+  //     // Flatten histories
+  //     const historiesFlattened = item.histories?.map((history:any) => ({
+  //       deviceId: item.id,
+  //       deviceUid: item.device_uid,
+  //       serialNumber: item.serial_number,
+  //       location: item.location,
+  //       latitude: item.lat,
+  //       longitude: item.lon,
+  //       createdAt: moment(item.createdAt).format("YYYY-MM-DD"),
+  //       updatedAt: moment(item.updatedAt).format("YYYY-MM-DD"),
+  //       readingType: "History",
+  //       readingId: history.id,
+  //       aqi: Number(history.aqi), // Ensure number type
+  //       humidity: null, // Histories don't have humidity
+  //       pm01_0: Number(history.pm1_0), // Ensure number type
+  //       pm02_5: Number(history.pm2_5), // Ensure number type
+  //       pm10_0: Number(history.pm10_0), // Ensure number type
+  //       pressure: null, // Histories don't have pressure
+  //       temperature: null, // Histories don't have temperature
+  //       voltage: null, // Histories don't have voltage
+  //       captured: null, // Histories don't have captured
+  //       readingCreatedAt: moment(history.date).format("YYYY-MM-DD"),
+  //     }));
+  
+  //     // Combine airReadings and histories
+  //     return [...airReadingsFlattened, ...historiesFlattened];
+  //   });
+  //   setCsvItems(flattenedData);
+  // }, [item]);
+
+
+
+
+
+
+  // Define headers for CSV
+  
+  const [startDate, endDate] = filterValues.dateRange;
+  const singleDate =  filterValues.date
   useEffect(() => {
+    const filterData = (
+      data: any[], 
+      startDate?: Dayjs | null, 
+      endDate?: Dayjs | null, 
+      singleDate?: Dayjs | null
+    ) => {
+      // If no filters are specified, return all data
+      if (!startDate && !endDate && !singleDate) return data;
+  
+      return data.filter(item => {
+        const itemDate = dayjs(item.readingCreatedAt);
+
+        
+        // Single date filter (exact match)
+        if (singleDate) {
+          return itemDate.isSame(singleDate, 'day');
+        }
+  
+        // Date range filter
+        const filterStartDate = startDate || dayjs('-Infinity');
+        const filterEndDate = endDate || dayjs('Infinity');
+  
+        // Check if the item's date is within the specified range (inclusive)
+        return itemDate.isAfter(filterStartDate.subtract(1, 'day')) && 
+        itemDate.isBefore(filterEndDate.add(1, 'day'));
+});
+    };
+  
     const flattenedData = [item].flatMap((item:any) => {
-      // Flatten airReading
+      // Flatten airReading (previous implementation remains the same)
       const airReadingsFlattened = item.airReading?.map((air:any) => ({
         deviceId: item.id,
         deviceUid: item.device_uid,
@@ -186,19 +343,19 @@ const AirReadingDetails = () => {
         updatedAt: moment(item.updatedAt).format("YYYY-MM-DD"),
         readingType: "Air Reading",
         readingId: air.id,
-        aqi: Number(air.aqi), // Ensure number type
-        humidity: Number(air.humidity), // Ensure number type
-        pm01_0: Number(air.pm01_0), // Ensure number type
-        pm02_5: Number(air.pm02_5), // Ensure number type
-        pm10_0: Number(air.pm10_0), // Ensure number type
-        pressure: Number(air.pressure), // Ensure number type
-        temperature: Number(air.temperature), // Ensure number type
-        voltage: Number(air.voltage), // Ensure number type
-        captured: Number(air.captured), // Ensure number type
+        aqi: Number(air.aqi),
+        humidity: Number(air.humidity),
+        pm01_0: Number(air.pm01_0),
+        pm02_5: Number(air.pm02_5),
+        pm10_0: Number(air.pm10_0),
+        pressure: Number(air.pressure),
+        temperature: Number(air.temperature),
+        voltage: Number(air.voltage),
+        captured: Number(air.captured),
         readingCreatedAt: moment(air.createdAt).format("YYYY-MM-DD"),
       }));
   
-      // Flatten histories
+      // Flatten histories (previous implementation remains the same)
       const historiesFlattened = item.histories?.map((history:any) => ({
         deviceId: item.id,
         deviceUid: item.device_uid,
@@ -210,30 +367,37 @@ const AirReadingDetails = () => {
         updatedAt: moment(item.updatedAt).format("YYYY-MM-DD"),
         readingType: "History",
         readingId: history.id,
-        aqi: Number(history.aqi), // Ensure number type
-        humidity: null, // Histories don't have humidity
-        pm01_0: Number(history.pm1_0), // Ensure number type
-        pm02_5: Number(history.pm2_5), // Ensure number type
-        pm10_0: Number(history.pm10_0), // Ensure number type
-        pressure: null, // Histories don't have pressure
-        temperature: null, // Histories don't have temperature
-        voltage: null, // Histories don't have voltage
-        captured: null, // Histories don't have captured
+        aqi: Number(history.aqi),
+        humidity: null,
+        pm01_0: Number(history.pm1_0),
+        pm02_5: Number(history.pm2_5),
+        pm10_0: Number(history.pm10_0),
+        pressure: null,
+        temperature: null,
+        voltage: null,
+        captured: null,
         readingCreatedAt: moment(history.date).format("YYYY-MM-DD"),
       }));
   
       // Combine airReadings and histories
       return [...airReadingsFlattened, ...historiesFlattened];
     });
-    setCsvItems(flattenedData);
-  }, [item]);
-
-
-
-
-
-
-  // Define headers for CSV
+    
+    // Filter the flattened data
+    const filteredData = filterData(
+      flattenedData, 
+      startDate,   // Optional start date for range
+      endDate,      // Optional end date for range
+      singleDate    // Optional single date
+    );
+  
+    setCsvItems(filteredData);
+    
+  }, [item, startDate, endDate, singleDate]);  // Add singleDate to dependency array
+  
+  
+  
+  
   const headers = [
     { label: "Device ID", key: "deviceId" },
     { label: "Device UID", key: "deviceUid" },
@@ -265,14 +429,13 @@ const AirReadingDetails = () => {
 
 
 
-  const [dateRange, setDaysRange]=useState<string | number>("Last 7 days")
 
 
 
   return (
     <MainLayout>
       <Container>
-        <div className="flex flex-col lg:flex-row justify-between lg:items-end mt-[60px]">
+        <div className="relative flex flex-col lg:flex-row justify-between lg:items-end mt-[60px]">
           <div className="flex flex-col gap-2 text-[24px] md:text-[32px] font-[700] text-[#2C2C2C] ">
             <Link to="/air-reading" className="w-[50px]   ">
               <IoArrowBackOutline size={20} />
@@ -282,7 +445,7 @@ const AirReadingDetails = () => {
 
           <Button
             className="h-[46px] w-[30%] lg:w-auto bg-transparent mt-5 lg:mt-0"
-            // onClick={showModal}
+            onClick={()=>setShowFilter(value => !value)}
             icon={
               <img
                 src="/download.svg"
@@ -291,7 +454,80 @@ const AirReadingDetails = () => {
               />
             }
           >
-                       <CSVLink
+       
+                <div className="text-[16px] font-[400]">Download</div>
+         
+          </Button>
+
+
+
+
+          <div
+            className={`absolute top-[180px] w-full h-fit z-[999] px-[25px] bg-white md:top-[150px] ${
+              showFilter === true ? "block" : "hidden"
+            }`}
+          >
+            <div className="flex gap-x-[20px]  mt-[20px]">
+              <div className="lg:w-[20%] ">
+                <Space direction="vertical" className=" w-full">
+                  <label
+                    htmlFor="date-picker"
+                    className="text-[16px] font-[400] text-BrandBlack1 "
+                  >
+                    Date
+                  </label>
+                  <DatePicker
+                    className="h-[48px] w-full"
+                    placeholder="Select date"
+                    onChange={(date) => handleFilterChange(date, "date")}
+                    value={filterValues.date}
+                  />
+                </Space>
+              </div>
+            
+           
+      
+         
+            </div>
+            <div className="lg:w-[40%]">
+              <Space direction="vertical" className="w-full">
+                <label
+                  htmlFor="date-range-picker"
+                  className="text-[16px] font-[400] text-BrandBlack1"
+                >
+                  Date Range
+                </label>
+                <RangePicker
+                  className="h-[48px] w-full"
+                  onChange={(dates) => handleFilterChange(dates, "dateRange")}
+                  value={filterValues.dateRange}
+                />
+              </Space>
+            </div>
+            <Divider className="mt-[15px] mb-[10px]" />
+            <div className="flex justify-end gap-x-[16px] mb-[20px]">
+              <Button
+                className="w-[234px] h-[48px] text-[16px] font-[400] bg-transparent text-[#9B9B9B]"
+                onClick={clearFilter}
+              >
+                Cancel
+              </Button>
+
+                <Button
+                  
+                  onClick={()=>{
+                    setShowFilter(false)
+                    setFilterValues({
+                      dateRange: [null, null],
+                      date: null,
+                    });
+                  }}
+                  type="primary"
+                 
+                  className="w-[234px] h-[48px] text-[16px] font-[400]  bg-BrandPrimary"
+                >
+                  <div className="text-[16px] font-[400]">
+                  <CSVLink
                 filename={"Air_monitoring_data.csv"}
            
                 data={csvItems}
@@ -299,9 +535,17 @@ const AirReadingDetails = () => {
         
                 className="btn btn-primary"
               >
-                <div className="text-[16px] font-[400]">Download</div>
+                <div className="text-[16px] font-[400]">Apply Filter</div>
               </CSVLink>
-          </Button>
+                  </div>
+                </Button>
+            
+            </div>
+          </div>
+
+
+
+
         </div>
 
         <div className="rounded-[20px] shadow-md w-full p-[20px] lg:p-[40px] mt-[50px]">
