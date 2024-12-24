@@ -39,7 +39,7 @@ const useRequestData = () => {
     setSuccessMessage(null); // Reset success message before sending request
 
     const requestBody = {
-      to: "adetoyeofficial@gmail.com",
+      to: "media.awaredl",
       ...formData,
     };
 
