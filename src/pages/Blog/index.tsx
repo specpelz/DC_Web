@@ -60,7 +60,7 @@ const Blog = () => {
   return (
     <MainLayout>
       <Container>
-        <div className="flex justify-center mt-[60px]">
+        <div className="flex justify-center mt-[20vh] lg:mt-[25vh]">
           <div className="w-[100%] ">
             <h1 className="font-[700] text-[32px] text-[#2C2C2C]">Blog</h1>
             <p className="my-[16px] text-[#757575] text-[18px] font-[500] md:w-[50%] ">

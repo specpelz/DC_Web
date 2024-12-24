@@ -5,40 +5,18 @@ import { Link, useLocation } from "react-router-dom";
 import { NavigationTypes } from "../../types/NavigationTypes";
 
 const navlinks: NavigationTypes[] = [
-  {
-    id: 1,
-    title: "Home",
-    link: "/",
-  },
-  {
-    id: 2,
-    title: "About",
-    link: "/#about", // Full path with hash
-  },
-  {
-    id: 3,
-    title: "Multimedia",
-    link: "/multimedia",
-  },
-  {
-    id: 4,
-    title: "Blog",
-    link: "/blog",
-  },
+  { id: 1, title: "Home", link: "/" },
+  { id: 2, title: "About", link: "/#about" },
+  { id: 3, title: "Multimedia", link: "/multimedia" },
+  { id: 4, title: "Blog", link: "/blog" },
 ];
 
 const Nav = () => {
-
   const location = useLocation();
-
-
   const [open, setOpen] = useState<boolean>(false);
 
-  const toggleMenu = () => {
-    setOpen((prev) => !prev);
-  };
+  const toggleMenu = () => setOpen((prev) => !prev);
 
-  // Function to check if the link is active
   const isActive = (link: string) => {
     if (link === "/#about") {
       return location.hash === "#about";
@@ -46,26 +24,17 @@ const Nav = () => {
     return location.pathname === link;
   };
 
-  // Handle navigation with hash scrolling
   const handleLinkClick = (link: string) => {
-    if (link === "/#about") {
-      if (location.pathname === "/") {
-        const element = document.getElementById("about");
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      }
+    if (link === "/#about" && location.pathname === "/") {
+      const element = document.getElementById("about");
+      if (element) element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <div className="flex justify-between items-center w-[90%] mx-auto py-[1rem] shadow-sm">
+    <div className="flex fixed top-0 z-[9999999] justify-between bg-white items-center w-[100%] px-4 lg:px-[80px] mx-auto py-[2rem] shadow-sm h-[14vh] ">
       <Link to="/" className="flex items-center z-[100]">
-        <img
-          src="/datalogo.png"
-          alt="logo"
-          className="w-[4rem] h-[4rem] md:w-[7rem] md:h-[7rem]"
-        />
+        <img src="/datalogo.png" alt="logo" className="w-[4rem] h-[4rem] md:w-[7rem] md:h-[7rem]" />
       </Link>
 
       <div className="lg:hidden z-[100]">
@@ -85,15 +54,14 @@ const Nav = () => {
           {navlinks.map((navlink) => (
             <li
               key={navlink.id}
-              className={`md:text-[1.6rem] lg:text-[1.8rem] cursor-pointer font-[500] ${
+              className={`md:text-[1.6rem] lg:text-[1.8rem] cursor-pointer font-[500] relative group ${
                 isActive(navlink.link) ? "text-primaryColor" : "text-brandDark"
               }`}
             >
-              <Link
-                to={navlink.link}
-                onClick={() => handleLinkClick(navlink.link)}
-              >
+              <Link to={navlink.link} onClick={() => handleLinkClick(navlink.link)} className="relative">
                 {navlink.title}
+                {/* Fancy Underline */}
+                <span className="absolute left-0 bottom-0 block w-0 h-[2px] bg-primaryColor transition-all duration-300 ease-in-out group-hover:w-full"></span>
               </Link>
             </li>
           ))}
@@ -115,10 +83,7 @@ const Nav = () => {
                 isActive(navlink.link) ? "text-primaryColor" : ""
               }`}
             >
-              <Link
-                to={navlink.link}
-                onClick={() => handleLinkClick(navlink.link)}
-              >
+              <Link to={navlink.link} onClick={() => handleLinkClick(navlink.link)}>
                 {navlink.title}
               </Link>
             </li>

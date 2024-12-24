@@ -68,7 +68,7 @@ const Multimedia = () => {
   // );
 
   const renderImages = (startIndex: number, endIndex: number) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 ">
       {multimediaDetails.slice(startIndex, endIndex).map((item) => (
         <div
           className="relative rounded-[10px] overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 group"
@@ -86,7 +86,7 @@ const Multimedia = () => {
               )
             }
           />
-  
+
           {/* Overlay with title on hover */}
           <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-60 text-white text-[14px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
             {item.title}
@@ -95,8 +95,6 @@ const Multimedia = () => {
       ))}
     </div>
   );
-  
-  
 
   const startIndex = (currentPage - 1) * imagesPerPage;
   const endIndex = Math.min(
@@ -107,7 +105,7 @@ const Multimedia = () => {
   return (
     <MainLayout>
       <Container>
-        <div className="flex justify-center mt-[60px]">
+        <div className="flex justify-center mt-[20vh] lg:mt-[25vh]">
           <div className="w-[100%]">
             <h1 className="font-[700] text-[32px] text-[#2C2C2C]">
               Multimedia
@@ -134,7 +132,9 @@ const Multimedia = () => {
                 {renderImages(startIndex, endIndex)}
               </div>
             ) : (
-              <p className="text-[14px] text-center text-red-500">Content not available</p>
+              <p className="text-[14px] text-center text-red-500">
+                Content not available
+              </p>
             )}
 
             <Pagination

@@ -36,11 +36,14 @@ const WhatWeDo = () => {
   const { contentDetails, loading } = useContentDetails();
 
   // Filter content based on title and <h3> text within the content
-  const targetH3Text = "What We Do";
+  // const targetH3Text = "What We Do";
   const specificContent = contentDetails.find(
     (item) =>
-      item.title === "About Us" &&
-      item.content.includes(`<h2><strong>${targetH3Text}</strong></h2>`)
+      item.title === "What We Do" 
+    // &&
+    //   item.content.includes(`<h2><strong>${targetH3Text}</strong></h2>`
+        
+    //   )
   );
 
   const extractContent = (content: string): ExtractedContent => {
@@ -73,7 +76,7 @@ const WhatWeDo = () => {
             <div className="w-full  flex flex-col gap-[8px]">
               <h2
                 style={{ fontFamily: "Merriweather", fontWeight: 700 }}
-                className="text-[20px] lg:text-[32px] lg:w-[400px] lg:leading-[38px]"
+                className="text-[20px] lg:text-[32px] lg:leading-[38px] uppercase"
               >
                 {extracted.h2Text}
               </h2>
