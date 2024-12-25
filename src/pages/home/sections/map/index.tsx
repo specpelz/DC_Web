@@ -40,7 +40,7 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 9.082, // Nigeria's approximate center
+  lat: 9.082,
   lng: 8.6753,
 };
 

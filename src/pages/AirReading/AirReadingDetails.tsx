@@ -44,7 +44,7 @@ interface FilterValues {
 const AirReadingDetails = () => {
   const location = useLocation();
   const { item } = location.state || {};
-  console.log(item, " Calling you Ole");
+  // console.log(item, " Calling you Ole");
 
   const colorRange = [
     {
@@ -258,7 +258,7 @@ const AirReadingDetails = () => {
 
   const [startDate, endDate] = filterValues.dateRange;
   const singleDate = filterValues.date;
-  
+
   useEffect(() => {
     const filterData = (
       data: any[],
@@ -660,6 +660,7 @@ const AirReadingDetails = () => {
               lat={item.lat}
               lon={item.lon}
               location={item.location}
+              airReading={item.airReading}
             />
           </div>
         </div>
