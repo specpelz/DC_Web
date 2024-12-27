@@ -99,29 +99,14 @@ const MediaAwareness = () => {
 
           {!loading && (
             <div className="flex items-center gap-[10px] lg:gap-[24px] mt-[12px]">
-              <Link to="#">
+              <Link to="https://www.majinigeria.org/" target="_blank">
                 <PrimaryBtn className="bg-primaryColor  h-[38px] lg:h-[48px] flex justify-center items-center text-brandWhite">
                   Visit Site
                 </PrimaryBtn>
               </Link>
-              {/* <Link to="#">
-                <PrimaryBtn className="text-brandWhite bg-brandDark  h-[38px] lg:h-[48px] flex justify-center items-center">
-                  See MAJI Campaigns
-                </PrimaryBtn>
-              </Link> */}
             </div>
           )}
         </div>
-
-        {/* <div className="w-full lg:w-[50%] hidden lg:flex">
-          <div className="flex relative justify-center  items-center w-full lg:w-[418px] lg:h-[563px]  bg-primaryColor shadow-[4px_8px_20px_5px_rgba(65,101,235,0.5)] rounded-xl">
-            <img
-              src="/awareimg.png"
-              alt="awareness image"
-              className="lg:h-[454px] lg:w-[600px] lg:absolute lg:left-24 lg:max-w-[500px] pt-[14px]"
-            />
-          </div>
-        </div> */}
         <div className="relative w-full lg:w-[50%] hidden lg:flex justify-center items-center">
           <div className="relative w-full lg:w-[418px]   shadow-[4px_8px_20px_5px_rgba(65,101,235,0.2)] rounded-xl overflow-hidden">
             {/* Carousel Images */}
@@ -151,7 +136,7 @@ const MediaAwareness = () => {
               ))}
             </div>
 
-            {/* Fancy Navigation Buttons */}
+            {/*Navigation Buttons */}
             <button
               onClick={handlePrev}
               className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white text-primaryColor p-3 rounded-full shadow-md hover:bg-primaryColor hover:text-white transition-all duration-300"

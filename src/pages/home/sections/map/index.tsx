@@ -7,7 +7,6 @@ import {
 } from "@react-google-maps/api";
 import useAirMonitoring from "@hooks/useAirMonitoring";
 
-// Define the type for air quality readings
 interface AirReading {
   airQualityReadingId: string;
   aqi: number;
@@ -25,13 +24,12 @@ interface AirReading {
   voltage: number;
 }
 
-// Define the type for each device, including air readings
 interface Device {
   id: string;
   lat: number;
   lon: number;
   location: string;
-  airReading: AirReading[]; // Added airReading property
+  airReading: AirReading[];
 }
 
 const containerStyle = {
@@ -49,21 +47,31 @@ const MapHighlights = () => {
     AirMonitoringDetails: Device[];
   };
 
-  const [selectedDevice, setSelectedDevice] = React.useState<Device | null>(
-    null
-  );
-
-  console.log("selectedDevice", selectedDevice);
+  const [hoveredDevice, setHoveredDevice] = React.useState<Device | null>(null);
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
 
   const latestAirReading =
-    selectedDevice &&
-    selectedDevice.airReading.reduce((latest, current) => {
+    hoveredDevice &&
+    hoveredDevice.airReading.reduce((latest, current) => {
       return current.captured > latest.captured ? current : latest;
-    }, selectedDevice.airReading[0]);
+    }, hoveredDevice.airReading[0]);
 
-  console.log("latestAirReading", latestAirReading);
+  const handleMouseOver = (device: Device) => {
+    if (debounceTimer) {
+      clearTimeout(debounceTimer); // Cancel any pending hide actions
+    }
+    setHoveredDevice(device);
+    setIsHovered(true); // Ensure InfoWindow is shown
+  };
 
-  
+  const handleMouseOut = () => {
+    const timer = setTimeout(() => {
+      setIsHovered(false); // Hide the InfoWindow after a short delay
+      setHoveredDevice(null);
+    }, 200); // Adjust delay time as needed
+    setDebounceTimer(timer);
+  };
 
   return (
     <div className="pb-[40px] lg:py-[40px]">
@@ -94,7 +102,8 @@ const MapHighlights = () => {
                   <Marker
                     key={device.id}
                     position={{ lat: device.lat, lng: device.lon }}
-                    onClick={() => setSelectedDevice(device)}
+                    onMouseOver={() => handleMouseOver(device)}
+                    onMouseOut={handleMouseOut}
                     icon={{
                       url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // Red dot marker
                       scaledSize: new window.google.maps.Size(40, 40), // Adjust the size of the marker
@@ -102,41 +111,33 @@ const MapHighlights = () => {
                   />
                 ))}
 
-              {selectedDevice && latestAirReading && (
+              {hoveredDevice && isHovered && latestAirReading && (
                 <InfoWindow
                   position={{
-                    lat: selectedDevice.lat,
-                    lng: selectedDevice.lon,
+                    lat: hoveredDevice.lat,
+                    lng: hoveredDevice.lon,
                   }}
-                  onCloseClick={() => setSelectedDevice(null)}
+                  onCloseClick={() => setIsHovered(false)}
                 >
-                  <div className="flex flex-col bg-primaryColor text-white p-[10px] rounded-[8px] w-[150px]">
+                  <div
+                    className="flex flex-col bg-primaryColor text-white p-[10px] rounded-[8px] w-[150px]"
+                    onMouseEnter={() => setIsHovered(true)} // Prevent closing when hovering over InfoWindow
+                    onMouseLeave={handleMouseOut} // Handle when mouse leaves InfoWindow
+                  >
                     <h4 className="text-lg font-semibold">
-                      {selectedDevice.location}
+                      {hoveredDevice.location}
                     </h4>
-                    <p className="text-sm text-left">
-                      AQI: {latestAirReading.aqi}
-                    </p>
-                    <p className="text-sm text-left">
-                      PM01_0: {latestAirReading.pm01_0}
-                    </p>
-
-                    <p className="text-sm text-left">
-                      PM02_5: {latestAirReading.pm02_5}
-                    </p>
-
-                    <p className="text-sm text-left">
-                      PM10_0: {latestAirReading.pm10_0}
-                    </p>
-                    <p className="text-sm text-left">
+                    <p className="text-sm text-left">AQI: {latestAirReading.aqi}</p>
+                    <p className="text-sm text-left">PM01_0: {latestAirReading.pm01_0}</p>
+                    <p className="text-sm text-left">PM02_5: {latestAirReading.pm02_5}</p>
+                    <p className="text-sm text-left">PM10_0: {latestAirReading.pm10_0}</p>
+                    {/* <p className="text-sm text-left">
                       Temperature: {latestAirReading.temperature}
                     </p>
                     <p className="text-sm text-left">
                       Pressure: {latestAirReading.pressure}
                     </p>
-                    <p className="text-sm text-left">
-                      Voltage: {latestAirReading.voltage}
-                    </p>
+                    <p className="text-sm text-left">Voltage: {latestAirReading.voltage}</p> */}
                   </div>
                 </InfoWindow>
               )}
