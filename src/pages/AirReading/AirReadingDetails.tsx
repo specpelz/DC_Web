@@ -76,17 +76,17 @@ const AirReadingDetails = () => {
   const pm = [
     {
       text: "PM 1",
-      value: item.airReading.length > 0 ? item.airReading[0].pm01_0 : "No data",
+      value: item.airReading.length > 0 ? item.airReading[(item.airReading.length)- 1].pm01_0 : "No data",
       info: "",
     },
     {
       text: "PM 2.5",
-      value: item.airReading.length > 0 ? item.airReading[0].pm02_5 : "No data",
+      value: item.airReading.length > 0 ? item.airReading[(item.airReading.length)- 1].pm02_5 : "No data",
       info: "",
     },
     {
       text: "PM 10",
-      value: item.airReading.length > 0 ? item.airReading[0].pm10_0 : "No data",
+      value: item.airReading.length > 0 ? item.airReading[(item.airReading.length)- 1].pm10_0 : "No data",
       info: "",
     },
   ];
@@ -95,19 +95,19 @@ const AirReadingDetails = () => {
     {
       text: "Humidity",
       value:
-        item.airReading.length > 0 ? item.airReading[0].humidity : "No data",
+        item.airReading.length > 0 ? item.airReading[(item.airReading.length)- 1].humidity : "No data",
       info: "",
     },
     {
       text: "Pressure",
       value:
-        item.airReading.length > 0 ? item.airReading[0].pressure : "No data",
+        item.airReading.length > 0 ? item.airReading[(item.airReading.length)- 1].pressure : "No data",
       info: "",
     },
     {
       text: "Voltage",
       value:
-        item.airReading.length > 0 ? item.airReading[0].voltage : "No data",
+        item.airReading.length > 0 ? item.airReading[(item.airReading.length)- 1].voltage : "No data",
       info: "",
     },
   ];
@@ -479,7 +479,7 @@ const AirReadingDetails = () => {
             Current reading
           </div>
           <div className="text-[18px] font-[500] text-[#757575]">
-            Last Updated:{moment(item.updatedAt).format("YYYY-MM-DD")}
+            Last Updated:{moment(item.airReading[(item.airReading.length)- 1].createdAt).format("YYYY-MM-DD")}
           </div>
 
           <div className="w-full xl:flex mt-[17px] gap-x-[20px]">
@@ -494,7 +494,7 @@ const AirReadingDetails = () => {
                     height: "auto",
                   }}
                   value={
-                    item.airReading.length > 0 ? item.airReading[0].aqi / 5 : 0
+                    item.airReading.length > 0 ? item.airReading[(item.airReading.length)- 1].aqi / 5 : 0
                   }
                   type="semicircle"
                   labels={{
@@ -529,7 +529,7 @@ const AirReadingDetails = () => {
                         const text = getAQRGrade(
                           String(
                             item.airReading.length > 0
-                              ? item.airReading[0].aqi
+                              ? item.airReading[(item.airReading.length)- 1].aqi
                               : ""
                           )
                         );
@@ -619,7 +619,7 @@ const AirReadingDetails = () => {
                   <div>
                     <div className="text-center text-[24px] md:text-[32px] font-[700] text-[#2C2C2C]">
                       {item.airReading.length > 0
-                        ? item.airReading[0].temperature
+                        ? item.airReading[(item.airReading.length)- 1].temperature
                         : "No data"}
                       &deg;C
                     </div>
