@@ -55,13 +55,13 @@ const MapHighlights = () => {
 
   console.log("selectedDevice", selectedDevice);
 
-  const latestAirReading =
-    selectedDevice &&
-    selectedDevice.airReading.reduce((latest, current) => {
-      return current.captured > latest.captured ? current : latest;
-    }, selectedDevice.airReading[0]);
+   
+  //   selectedDevice &&
+  //   selectedDevice.airReading.reduce((latest, current) => {
+  //     return current.captured > latest.captured ? current : latest;
+  //   }, selectedDevice.airReading[0]);
 
-  console.log("latestAirReading", latestAirReading);
+  // console.log("latestAirReading", latestAirReading);
 
   
 
@@ -102,7 +102,7 @@ const MapHighlights = () => {
                   />
                 ))}
 
-              {selectedDevice && latestAirReading && (
+              {selectedDevice && selectedDevice.airReading && (
                 <InfoWindow
                   position={{
                     lat: selectedDevice.lat,
@@ -115,27 +115,27 @@ const MapHighlights = () => {
                       {selectedDevice.location}
                     </h4>
                     <p className="text-sm text-left">
-                      AQI: {latestAirReading.aqi}
+                      AQI: {selectedDevice?.airReading[(selectedDevice?.airReading.length)- 1]?.aqi}
                     </p>
                     <p className="text-sm text-left">
-                      PM01_0: {latestAirReading.pm01_0}
-                    </p>
-
-                    <p className="text-sm text-left">
-                      PM02_5: {latestAirReading.pm02_5}
+                      PM01_0: {selectedDevice?.airReading[(selectedDevice?.airReading.length)- 1]?.pm01_0}
                     </p>
 
                     <p className="text-sm text-left">
-                      PM10_0: {latestAirReading.pm10_0}
+                      PM02_5: {selectedDevice?.airReading[(selectedDevice?.airReading.length)- 1]?.pm02_5}
+                    </p>
+
+                    <p className="text-sm text-left">
+                      PM10_0: {selectedDevice?.airReading[(selectedDevice?.airReading.length)- 1]?.pm10_0}
                     </p>
                     <p className="text-sm text-left">
-                      Temperature: {latestAirReading.temperature}
+                      Temperature: {selectedDevice?.airReading[(selectedDevice?.airReading.length)- 1]?.temperature}
                     </p>
                     <p className="text-sm text-left">
-                      Pressure: {latestAirReading.pressure}
+                      Pressure: {selectedDevice?.airReading[(selectedDevice?.airReading.length)- 1]?.pressure}
                     </p>
                     <p className="text-sm text-left">
-                      Voltage: {latestAirReading.voltage}
+                      Voltage: {selectedDevice?.airReading[(selectedDevice?.airReading.length)- 1]?.voltage}
                     </p>
                   </div>
                 </InfoWindow>
