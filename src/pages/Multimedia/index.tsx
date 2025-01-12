@@ -1,4 +1,5 @@
 import Container from "@components/container";
+import useContentDetails from "@hooks/useContentDetails";
 import useMultimedia from "@hooks/useMultimedia";
 import MainLayout from "@layouts/MainLayout";
 import { Pagination } from "antd";
@@ -102,17 +103,51 @@ const Multimedia = () => {
     multimediaDetails.length
   );
 
+  const { contentDetails, loading: MultimediaLoading } = useContentDetails();
+
+  // console.log("contentDetails", contentDetails);
+
+  const MultimediaTitle = contentDetails.find(
+    (item) => item.title === "Multimedia"
+  )?.title;
+
+  const MultimediaDesc = contentDetails.find(
+    (item) => item.title === "Multimedia"
+  )?.content;
+
+  // console.log("AirReading", {
+  //   MultimediaTitle: MultimediaTitle,
+  //   MultimediaDesc: MultimediaDesc,
+  // });
+
   return (
     <MainLayout>
       <Container>
         <div className="flex justify-center mt-[20vh] lg:mt-[25vh]">
           <div className="w-[100%]">
             <h1 className="font-[700] text-[32px] text-[#2C2C2C] font-arialBlack">
-              Multimedia
+              {MultimediaLoading ? (
+                "Loading..."
+              ) : (
+                <>
+                  <div
+                    className="font-[700] text-[32px] text-[#2C2C2C] font-arialBlack"
+                    dangerouslySetInnerHTML={{ __html: MultimediaTitle || "" }}
+                  />
+                </>
+              )}
             </h1>
             <p className="my-[16px] text-[#757575] text-[18px] font-[500] md:w-[50%] ">
-              We simplify environmental incident data into clear infographics,
-              fostering grassroots participation in environmental protection.
+              {MultimediaLoading ? (
+                "Loading..."
+              ) : (
+                <>
+                  <div
+                    className="text-[#757575] text-[18px] font-[500]"
+                    dangerouslySetInnerHTML={{ __html: MultimediaDesc || "" }}
+                  />
+                </>
+              )}
             </p>
 
             {loading ? (
