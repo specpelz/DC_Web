@@ -7,6 +7,7 @@ import {
 } from "@react-google-maps/api";
 import useAirMonitoring from "@hooks/useAirMonitoring";
 
+// Define the type for air quality readings
 interface AirReading {
   airQualityReadingId: string;
   aqi: number;
@@ -24,12 +25,13 @@ interface AirReading {
   voltage: number;
 }
 
+// Define the type for each device, including air readings
 interface Device {
   id: string;
   lat: number;
   lon: number;
   location: string;
-  airReading: AirReading[];
+  airReading: AirReading[]; // Added airReading property
 }
 
 const containerStyle = {
@@ -47,41 +49,29 @@ const MapHighlights = () => {
     AirMonitoringDetails: Device[];
   };
 
-  const [hoveredDevice, setHoveredDevice] = React.useState<Device | null>(null);
-  const [isHovered, setIsHovered] = React.useState(false);
-  const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
+  const [selectedDevice, setSelectedDevice] = React.useState<Device | null>(
+    null
+  );
+
+  console.log("selectedDevice", selectedDevice);
 
   const latestAirReading =
-    hoveredDevice &&
-    hoveredDevice.airReading.reduce((latest, current) => {
+    selectedDevice &&
+    selectedDevice.airReading.reduce((latest, current) => {
       return current.captured > latest.captured ? current : latest;
-    }, hoveredDevice.airReading[0]);
+    }, selectedDevice.airReading[0]);
 
-  const handleMouseOver = (device: Device) => {
-    if (debounceTimer) {
-      clearTimeout(debounceTimer); // Cancel any pending hide actions
-    }
-    setHoveredDevice(device);
-    setIsHovered(true); // Ensure InfoWindow is shown
-  };
-
-  const handleMouseOut = () => {
-    const timer = setTimeout(() => {
-      setIsHovered(false); // Hide the InfoWindow after a short delay
-      setHoveredDevice(null);
-    }, 200); // Adjust delay time as needed
-    setDebounceTimer(timer);
-  };
+  console.log("latestAirReading", latestAirReading);
 
   return (
     <div className="pb-[40px] lg:py-[40px]">
       <div className="flex flex-col gap-[8px] justify-center items-center">
         <h2
           style={{
-            fontFamily: "Merriweather",
+            // fontFamily: "Merriweather",
             fontWeight: 700,
           }}
-          className="text-[20px] lg:text-[32px] lg:w-[379px] lg:leading-[38px] text-center uppercase"
+          className="text-[20px] lg:text-[32px] lg:w-[379px] lg:leading-[38px] text-center uppercase font-arialBlack"
         >
           Map Highlights
         </h2>
@@ -102,8 +92,7 @@ const MapHighlights = () => {
                   <Marker
                     key={device.id}
                     position={{ lat: device.lat, lng: device.lon }}
-                    onMouseOver={() => handleMouseOver(device)}
-                    onMouseOut={handleMouseOut}
+                    onClick={() => setSelectedDevice(device)}
                     icon={{
                       url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // Red dot marker
                       scaledSize: new window.google.maps.Size(40, 40), // Adjust the size of the marker
@@ -111,33 +100,41 @@ const MapHighlights = () => {
                   />
                 ))}
 
-              {hoveredDevice && isHovered && latestAirReading && (
+              {selectedDevice && latestAirReading && (
                 <InfoWindow
                   position={{
-                    lat: hoveredDevice.lat,
-                    lng: hoveredDevice.lon,
+                    lat: selectedDevice.lat,
+                    lng: selectedDevice.lon,
                   }}
-                  onCloseClick={() => setIsHovered(false)}
+                  onCloseClick={() => setSelectedDevice(null)}
                 >
-                  <div
-                    className="flex flex-col bg-primaryColor text-white p-[10px] rounded-[8px] w-[150px]"
-                    onMouseEnter={() => setIsHovered(true)} // Prevent closing when hovering over InfoWindow
-                    onMouseLeave={handleMouseOut} // Handle when mouse leaves InfoWindow
-                  >
+                  <div className="flex flex-col bg-primaryColor text-white p-[10px] rounded-[8px] w-[150px]">
                     <h4 className="text-lg font-semibold">
-                      {hoveredDevice.location}
+                      {selectedDevice.location}
                     </h4>
-                    <p className="text-sm text-left">AQI: {latestAirReading.aqi}</p>
-                    <p className="text-sm text-left">PM01_0: {latestAirReading.pm01_0}</p>
-                    <p className="text-sm text-left">PM02_5: {latestAirReading.pm02_5}</p>
-                    <p className="text-sm text-left">PM10_0: {latestAirReading.pm10_0}</p>
-                    {/* <p className="text-sm text-left">
+                    <p className="text-sm text-left">
+                      AQI: {latestAirReading.aqi}
+                    </p>
+                    <p className="text-sm text-left">
+                      PM01_0: {latestAirReading.pm01_0}
+                    </p>
+
+                    <p className="text-sm text-left">
+                      PM02_5: {latestAirReading.pm02_5}
+                    </p>
+
+                    <p className="text-sm text-left">
+                      PM10_0: {latestAirReading.pm10_0}
+                    </p>
+                    <p className="text-sm text-left">
                       Temperature: {latestAirReading.temperature}
                     </p>
                     <p className="text-sm text-left">
                       Pressure: {latestAirReading.pressure}
                     </p>
-                    <p className="text-sm text-left">Voltage: {latestAirReading.voltage}</p> */}
+                    <p className="text-sm text-left">
+                      Voltage: {latestAirReading.voltage}
+                    </p>
                   </div>
                 </InfoWindow>
               )}

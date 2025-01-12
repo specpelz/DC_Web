@@ -15,10 +15,10 @@ const Hero = () => {
         <div className="relative flex flex-col gap-[16px] lg:gap-[24px] justify-center items-center h-full">
           <h1
             style={{
-              fontFamily: "Merriweather",
+              // fontFamily: "Merriweather",
               fontWeight: 700,
             }}
-            className="text-[24px] md:text-[32px] lg:text-[48px] text-center font-[700] lg:leading-[57px] lg:w-[997px]"
+            className="text-[24px] md:text-[32px] lg:text-[48px] text-center font-[700] lg:leading-[57px] lg:w-[997px] font-arialBlack"
           >
             STRENGTHENING ENVIRONMENTAL ADVOCACY THROUGH DATA SIMPLIFICATION FOR
             EVIDENCED BASED ACTION

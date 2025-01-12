@@ -71,15 +71,15 @@ const Donors = () => {
       <div className="flex flex-col gap-[18px] lg:gap-[20px]">
         <h2
           style={{
-            fontFamily: "Merriweather",
+            // fontFamily: "Merriweather",
             fontWeight: 700,
           }}
-          className="text-[20px] lg:text-[32px] lg:leading-[38px] text-center"
+          className="text-[20px] lg:text-[32px] lg:leading-[38px] text-center font-arialBlack"
         >
           Our Donors
         </h2>
 
-        <div className="flex flex-wrap justify-center items-start gap-[20px] lg:gap-[40px]">
+        <div className="flex flex-wrap justify-center items-start gap-[20px] lg:gap-[40px] lg:mt-[20px]">
           {donorsList.map((donor, index) => (
             <div key={index} className="flex flex-col items-center gap-4">
               <img src={donor.icon} alt={donor.name} className=" h-[50px]" />

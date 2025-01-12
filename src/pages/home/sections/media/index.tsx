@@ -81,8 +81,10 @@ const MediaAwareness = () => {
           ) : specificContent ? (
             <div className="w-full  flex flex-col gap-[8px]">
               <h2
-                style={{ fontFamily: "Merriweather", fontWeight: 700 }}
-                className="text-[20px] lg:text-[32px] lg:leading-[38px] uppercase"
+                style={{ 
+                  // fontFamily: "Merriweather",
+                  fontWeight: 700 }}
+                className="text-[20px] lg:text-[32px] lg:leading-[38px] uppercase font-arialBlack"
               >
                 {extracted.h2Text}
               </h2>
