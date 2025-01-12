@@ -98,7 +98,7 @@ const AboutDataCasting = () => {
   };
 
   const { contentDetails, loading } = useContentDetails();
-  console.log("contentDetails", contentDetails)
+  // console.log("contentDetails", contentDetails)
 
   // Filter content based on title and <h3> text within the content
   // const targetH3Text = "DATA CASTING FOR BIODIVERSITY";
@@ -139,8 +139,10 @@ const AboutDataCasting = () => {
           ) : specificContent ? (
             <div className="w-full  flex flex-col gap-[8px]">
               <h2
-                style={{ fontFamily: "Merriweather", fontWeight: 700 }}
-                className="text-[20px] lg:text-[32px] lg:leading-[38px] uppercase"
+                style={{ 
+                  // fontFamily: "Merriweather",
+                  fontWeight: 700 }}
+                className="text-[20px] lg:text-[32px] lg:leading-[38px] uppercase font-arialBlack"
               >
                 {extracted.h2Text}
               </h2>

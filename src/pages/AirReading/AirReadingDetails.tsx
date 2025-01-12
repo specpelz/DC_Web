@@ -380,7 +380,7 @@ const AirReadingDetails = () => {
     <MainLayout>
       <Container>
         <div className="relative flex flex-col lg:flex-row justify-between lg:items-end mt-[20vh] lg:mt-[25vh]">
-          <div className="flex flex-col gap-2 text-[24px] md:text-[32px] font-[700] text-[#2C2C2C] ">
+          <div className="flex flex-col gap-2 text-[24px] md:text-[32px] font-[700] text-[#2C2C2C] font-arialBlack">
             <Link to="/air-reading" className="w-[50px]   ">
               <IoArrowBackOutline size={20} />
             </Link>

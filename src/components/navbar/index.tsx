@@ -34,7 +34,7 @@ const Nav = () => {
   return (
     <div className="flex fixed top-0 z-[9999999] justify-between bg-white items-center w-[100%] px-4 lg:px-[80px] mx-auto py-[2rem] shadow-sm h-[14vh] ">
       <Link to="/" className="flex items-center z-[100]">
-        <img src="/datalogo.png" alt="logo" className="w-[4rem] h-[4rem] md:w-[7rem] md:h-[7rem]" />
+        <img src="/datalogo.png" alt="logo" className="w-[5rem] h-[5rem] md:w-[7rem] md:h-[7rem]" />
       </Link>
 
       <div className="lg:hidden z-[100]">
@@ -71,15 +71,15 @@ const Nav = () => {
       <div
         className={`${
           open
-            ? "top-0 opacity-100 transition-all duration-500 ease-in-out"
+            ? "top-0 opacity-100 transition-all duration-500 ease-in-out h-screen"
             : "max-h-0 opacity-0 transition-all duration-500 ease-in-out top-30"
-        } shadow-sm pt-28 overflow-hidden flex flex-col justify-center items-center text-center lg:hidden bg-brandWhite gap-4 absolute left-0 z-50 w-full p-6 mx-auto`}
+        } shadow-sm pt-28 overflow-hidden flex flex-col  items-center text-center lg:hidden bg-brandWhite gap-4 absolute left-0 z-50 w-full p-6 mx-auto`}
       >
         <ul className="flex flex-col gap-[1.6rem] lg:gap-[4.8rem] items-center">
           {navlinks.map((navlink) => (
             <li
               key={navlink.id}
-              className={`text-[1.8rem] cursor-pointer font-[500] ${
+              className={`text-[2rem] cursor-pointer font-[500] ${
                 isActive(navlink.link) ? "text-primaryColor" : ""
               }`}
             >
@@ -90,7 +90,7 @@ const Nav = () => {
           ))}
         </ul>
         <Link to="/air-reading">
-          <PrimaryBtn className="bg-primaryColor h-[38px] lg:h-[48px] flex justify-center items-center text-brandWhite">
+          <PrimaryBtn className="bg-primaryColor h-[38px] lg:h-[48px] flex justify-center items-center text-brandWhite text-[1.8rem]">
             Check Air Quality
           </PrimaryBtn>
         </Link>

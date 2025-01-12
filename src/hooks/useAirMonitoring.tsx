@@ -26,7 +26,7 @@ const useAirMonitoring = (): UseAirMonitoringReturn => {
     setLoading(true);
     try {
       const response = await axios.get(`${BASE_URL}/air-monitoring`);
-      console.log("fetchAirMonitoringDetails", response);
+      // console.log("fetchAirMonitoringDetails", response);
 
       if (response.status === 200 || response.data.status === "success") {
         setAirMonitoringDetails(response.data.data);

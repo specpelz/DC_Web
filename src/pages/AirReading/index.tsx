@@ -5,16 +5,15 @@ import { IoSearch } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AQ_Card from "@components/AQ_card";
-
 import Container from "@components/container";
 import Donors from "@pages/home/sections/donors";
 import Select_v2 from "@components/select/Select_v2";
 import { AMD_type_v2 } from "../../types/airMonitoring";
-
 import { MdClear } from "react-icons/md";
-
 import MapHighlights from "@pages/home/sections/map";
 import useAirMonitoring from "../../hooks/useAirMonitoring";
+import useContentDetails from "@hooks/useContentDetails";
+
 
 interface SelectOption {
   value: string;
@@ -53,6 +52,27 @@ const AirReading = () => {
   // const set_data?.data = useAqtStore((state) => state.set_AQI_datas);
 
   const { AirMonitoringDetails: data, loading: isLoading } = useAirMonitoring();
+  const { contentDetails, loading } = useContentDetails();
+
+  // console.log("contentDetails", contentDetails);
+
+  const AirReadingTitle = contentDetails.find(
+    (item) => item.title === "Air Reading"
+  )?.title;
+
+  const AirReadingDesc = contentDetails.find(
+    (item) => item.title === "Air Reading"
+  )?.content;
+
+  // console.log("AirReading", {
+  //   AirReadingTitle: AirReadingTitle,
+  //   AirReadingDesc: AirReadingDesc,
+  // });
+
+  // <div
+  //                     className="text-brandDark text-[14px] font-[500]"
+  //                     dangerouslySetInnerHTML={{ __html: address }} // Render raw HTML
+  //                   />
 
   const [filteredItems, setFilteredItems] = useState<AMD_type_v2[] | undefined>(
     []
@@ -233,12 +253,29 @@ const AirReading = () => {
       <Container>
         <div className="flex justify-center mt-[20vh] lg:mt-[25vh]">
           <div className="w-[100%] ">
-            <h1 className="font-[700] text-[32px] text-[#2C2C2C]">
-              Air Reading
+            <h1 className="font-[700] text-[32px] text-[#2C2C2C] font-arialBlack">
+              {loading ? (
+                "Loading..."
+              ) : (
+                <>
+                  <div
+                    className="font-[700] text-[32px] text-[#2C2C2C] font-arialBlack"
+                    dangerouslySetInnerHTML={{ __html: AirReadingTitle || '' }}
+                  />
+                </>
+              )}
             </h1>
             <p className="my-[16px] text-[#757575] text-[18px] font-[500] md:w-[50%] ">
-              We simplify environmental incident data into clear infographics,
-              fostering grassroots participation in environmental protection.
+              {loading ? (
+                "Loading..."
+              ) : (
+                <>
+                  <div
+                    className="text-[#757575] text-[18px] font-[500]"
+                    dangerouslySetInnerHTML={{ __html: AirReadingDesc || '' }}
+                  />
+                </>
+              )}
             </p>
 
             {/* <div className="flex justify-between items-center"> */}

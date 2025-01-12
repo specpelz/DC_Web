@@ -53,7 +53,7 @@ const MapHighlights = () => {
     null
   );
 
-  console.log("selectedDevice", selectedDevice);
+  // console.log("selectedDevice", selectedDevice);
 
    
   //   selectedDevice &&
@@ -63,17 +63,15 @@ const MapHighlights = () => {
 
   // console.log("latestAirReading", latestAirReading);
 
-  
-
   return (
     <div className="pb-[40px] lg:py-[40px]">
       <div className="flex flex-col gap-[8px] justify-center items-center">
         <h2
           style={{
-            fontFamily: "Merriweather",
+            // fontFamily: "Merriweather",
             fontWeight: 700,
           }}
-          className="text-[20px] lg:text-[32px] lg:w-[379px] lg:leading-[38px] text-center uppercase"
+          className="text-[20px] lg:text-[32px] lg:w-[379px] lg:leading-[38px] text-center uppercase font-arialBlack"
         >
           Map Highlights
         </h2>

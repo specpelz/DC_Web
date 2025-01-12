@@ -64,10 +64,10 @@ const MapHighlights = ({ id, lat, lon, location, airReading }: Device) => {
       <div className="flex flex-col gap-[8px] justify-center items-center">
         <h2
           style={{
-            fontFamily: "Merriweather",
+            // fontFamily: "Merriweather",
             fontWeight: 700,
           }}
-          className="text-[20px] lg:text-[32px] lg:w-[379px] lg:leading-[38px] text-center"
+          className="text-[20px] lg:text-[32px] lg:w-[379px] lg:leading-[38px] text-center font-arialBlack"
         >
           Map Highlights
         </h2>
