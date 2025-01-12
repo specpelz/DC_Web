@@ -51,11 +51,11 @@ const MapHighlights = ({ id, lat, lon, location, airReading }: Device) => {
     setMapLoaded(true);
   };
 
-  const latestAirReading =
-    selectedDevice &&
-    selectedDevice.airReading.reduce((latest, current) => {
-      return current.captured > latest.captured ? current : latest;
-    }, selectedDevice.airReading[0]);
+  // const latestAirReading =
+  //   selectedDevice &&
+  //   selectedDevice.airReading.reduce((latest, current) => {
+  //     return current.captured > latest.captured ? current : latest;
+  //   }, selectedDevice.airReading[0]);
 
   // console.log("latestAirReading", latestAirReading);
 
@@ -120,27 +120,27 @@ const MapHighlights = ({ id, lat, lon, location, airReading }: Device) => {
                         {selectedDevice.location}
                       </h4>
                       <p className="text-sm text-left">
-                        AQI: {latestAirReading?.aqi}
+                        AQI: {airReading[(airReading.length)- 1]?.aqi}
                       </p>
                       <p className="text-sm text-left">
-                        PM01_0: {latestAirReading?.pm01_0}
-                      </p>
-
-                      <p className="text-sm text-left">
-                        PM02_5: {latestAirReading?.pm02_5}
+                        PM01_0: {airReading[(airReading.length)- 1]?.pm01_0}
                       </p>
 
                       <p className="text-sm text-left">
-                        PM10_0: {latestAirReading?.pm10_0}
+                        PM02_5: {airReading[(airReading.length)- 1]?.pm02_5}
+                      </p>
+
+                      <p className="text-sm text-left">
+                        PM10_0: {airReading[(airReading.length)- 1]?.pm10_0}
                       </p>
                       <p className="text-sm text-left">
-                        Temperature: {latestAirReading?.temperature}
+                        Temperature: {airReading[(airReading.length)- 1]?.temperature}
                       </p>
                       <p className="text-sm text-left">
-                        Pressure: {latestAirReading?.pressure}
+                        Pressure: {airReading[(airReading.length)- 1]?.pressure}
                       </p>
                       <p className="text-sm text-left">
-                        Voltage: {latestAirReading?.voltage}
+                        Voltage: {airReading[(airReading.length)- 1]?.voltage}
                       </p>
                     </div>
                   </InfoWindow>
