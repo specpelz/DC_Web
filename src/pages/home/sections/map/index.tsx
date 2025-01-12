@@ -53,7 +53,7 @@ const MapHighlights = () => {
     null
   );
 
-  console.log("selectedDevice", selectedDevice);
+  // console.log("selectedDevice", selectedDevice);
 
    
   //   selectedDevice &&

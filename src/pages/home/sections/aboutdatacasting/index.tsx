@@ -98,7 +98,7 @@ const AboutDataCasting = () => {
   };
 
   const { contentDetails, loading } = useContentDetails();
-  console.log("contentDetails", contentDetails)
+  // console.log("contentDetails", contentDetails)
 
   // Filter content based on title and <h3> text within the content
   // const targetH3Text = "DATA CASTING FOR BIODIVERSITY";

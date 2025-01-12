@@ -11,20 +11,20 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   const { contentDetails, loading } = useContentDetails();
 
-  console.log("contentDetails", contentDetails);
+  // console.log("contentDetails", contentDetails);
 
   const email =
     contentDetails.find((item) => item.title === "Email")?.content ||
     "email@email.org.ng";
-  console.log("email", email);
+  // console.log("email", email);
   const address =
     contentDetails.find((item) => item.title === "Address")?.content ||
     "#NO address address, address.";
-  console.log("address", address);
+  // console.log("address", address);
   const phone =
     contentDetails.find((item) => item.title === "Phone")?.content ||
     "+2347000000000";
-  console.log("phone", phone);
+  // console.log("phone", phone);
 
   return (
     <div className="flex flex-col  shadow-sm bg-white ">
